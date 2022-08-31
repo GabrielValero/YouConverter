@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import {Platform} from 'react-native'
+import {Platform, PermissionsAndroid, Alert} from 'react-native'
 import * as Permissions from 'expo-permissions';
 import RNFetchBlob from "rn-fetch-blob";
 
@@ -17,33 +17,64 @@ export default function useDownLoadFile(){
     //let isVideo = uri.includes(".mp4") ? false : true;
     //let title = isVideo ? video.title : Math.floor(date.getTime() + date.getSeconds() / 2);
     const downloadUrl = await downloadSource({id: mediaInfo.id, format: format})
-    // let cameraPermissions = await Permissions.getAsync(Permissions.CAMERA_ROLL);
-    // if (cameraPermissions.status !== 'granted') {
-    //   cameraPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    // }
-    console.log(downloadUrl);
-    // if (true) {
-    //   console.log("Y por aqui tambien");
-    //   FileSystem.downloadAsync(
-    //     audioLink,
-    //     FileSystem.documentDirectory + "CSM IRIS  - Goo Goo Dolls (Rock cover by Jonathan Young).mp3",
-    //     {},
-    //     callback
-    //   )
-    //   .then(({ uri }) => {
-    //     console.log('Finished downloading to ', uri);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-    //
-    // } else {
-    //   alert('Requires file permission');
-    // }
 
+    const permission = await requestToPermissions()
+
+    permission ?
+    RNFetchBlob.config({
+      fileCache : true,
+      appendExt: 'mp3',
+      addAndroidDownloads : {
+        useDownloadManager: true,
+        notification : true,
+        title : mediaInfo.title,
+        path: RNFetchBlob.fs.dirs.DownloadDir + `/$name` + ".mp3",
+        description: 'You Converter',
+        mime: "audio/mpeg"
+      }
+    })
+      .fetch("GET", downloadUrl)
+      .then((res) => {
+        // the temp file path
+        console.log("The file saved to ", res.path());
+      })
+      .catch((errorMessage, statusCode) => {
+          console.log("errorMessage", errorMessage)
+          console.log("statusCode", statusCode)
+        })
+    : Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
   }
 
   return {
     downloadImage
   }
 }
+
+
+const requestToPermissions = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
+          title: 'Music',
+          message: 'Es necesario que nos permitas hackearte',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      );
+      return granted === PermissionsAndroid.RESULTS.GRANTED ? true : false
+    }
+    catch (err){
+     console.log(err)
+    }
+  }
