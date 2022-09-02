@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 
 import {ConverterContext} from './src/context/ConverterContext'
-import ConverterTab from './src/Navigation/Tab/ConverterTab'
+import { ConverterStack } from './src/Navigation/Stack/ConverterStack'
 
 export default function App() {
   return (
     <ConverterContext>
       <NavigationContainer>
-        <ConverterTab/>
+        <ConverterStack/>
         <StatusBar style="light" hidden={true}/>
       </NavigationContainer>
     </ConverterContext>

@@ -10,6 +10,6 @@ export default function Container({children, styleProps}){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "9B9B9B",
+    backgroundColor: "#2A2C39",
   }
 })

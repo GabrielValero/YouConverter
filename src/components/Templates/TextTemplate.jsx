@@ -1,23 +1,24 @@
 import React from 'react'
 import {Text, StyleSheet} from 'react-native'
+import colors from '../../config/colors'
 
-export default function TextTemplate({children, styleProps, bold, title, small}){
+export default function TextTemplate({children, style, bold, title, small}){
 
-  const textStyles = [styles.text, title && styles.title,bold && styles.bold, small && styles.small]
+  const textStyles = [styles.text, title && styles.title,bold && styles.bold, small && styles.small, style]
 
   return(
-    <Text style={[textStyles, styleProps]}>{children}</Text>
+    <Text style={textStyles}>{children}</Text>
   )
 }
 
 const styles = StyleSheet.create({
   text:{
-    fontSize: 15,
-    color: "#3A3A3A",
+    fontSize: 17,
+    color: colors.textColor,
   },
   title:{
     fontWeight: 'bold',
-    fontSize: 17,
+    fontSize: 20,
   },
   bold:{
     fontWeight: 'bold',

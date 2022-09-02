@@ -4,9 +4,10 @@ import ConverterContext from '../context/ConverterContext'
 
 import fetchYoutubeInfo from '../utils/fetchYoutubeInfo'
 import fetchInstagramInfo from '../utils/fetchInstagramInfo'
+import downloadSource from '../utils/downloadSource'
 
 export default function useMediaInfo(){
-  const {setMediaInfo} = useContext(ConverterContext)
+  const {setMediaInfo, setDownloadInfo} = useContext(ConverterContext)
 
   // const getInstagramInfo = async ({url})=>{
   //
@@ -15,11 +16,12 @@ export default function useMediaInfo(){
   //   console.log(response);
   // }
 
-  const getYoutubeVideoInfo = async ({id,part})=>{
+  const getYoutubeVideoInfo = async ({id, part})=>{
      const response = await fetchYoutubeInfo({videoId:id, part});
-
      setMediaInfo(response)
-     console.log(response);
+
+     const downloadUrl = await downloadSource({id: id})
+     setDownloadInfo(downloadUrl)
   }
 
   return{

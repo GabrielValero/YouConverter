@@ -8,32 +8,29 @@ import downloadSource from '../utils/downloadSource'
 
 export default function useDownLoadFile(){
 
-  const {mediaInfo} = useContext(ConverterContext)
-  const [progress, setProgress] = useState()
+  const {mediaInfo, downloadInfo} = useContext(ConverterContext)
 
-  const downloadImage = async ({setProgress, format})=>{
-    let date = new Date();
-    let uri = mediaInfo.image;
-    //let isVideo = uri.includes(".mp4") ? false : true;
-    //let title = isVideo ? video.title : Math.floor(date.getTime() + date.getSeconds() / 2);
-    const downloadUrl = await downloadSource({id: mediaInfo.id, format: format})
-
+  const downloadMedia = async ({setProgress, isVideoDownloading})=>{
     const permission = await requestToPermissions()
+
+    const url = isVideoDownloading ? downloadInfo.video.url : downloadInfo.audio.url
 
     permission ?
     RNFetchBlob.config({
       fileCache : true,
-      appendExt: 'mp3',
+      appendExt: isVideoDownloading ? "mp4" : 'mp3',
       addAndroidDownloads : {
         useDownloadManager: true,
         notification : true,
         title : mediaInfo.title,
-        path: RNFetchBlob.fs.dirs.DownloadDir + `/$name` + ".mp3",
+        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${mediaInfo.title}${isVideoDownloading ? ".mp4" : '.mp3'}`,
         description: 'You Converter',
-        mime: "audio/mpeg"
       }
-    })
-      .fetch("GET", downloadUrl)
+    }).fetch("GET", url, {'Content-Type': 'application/json'})
+      .progress((received, total) => {
+        console.log("progress", received / total);
+        setProgress(received / total)
+      })
       .then((res) => {
         // the temp file path
         console.log("The file saved to ", res.path());
@@ -43,21 +40,21 @@ export default function useDownLoadFile(){
           console.log("statusCode", statusCode)
         })
     : Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
+      "FALTAN PERMISOS!!!",
+      "Negaste permisos que necesitas para descargar un video o canción",
       [
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "Dar permiso", onPress: () =>  downloadMedia}
       ]
     );
   }
 
   return {
-    downloadImage
+    downloadMedia
   }
 }
 

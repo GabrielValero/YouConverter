@@ -6,10 +6,11 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 import TextTemplate from '../Templates/TextTemplate'
 import ConverterContext from '../../context/ConverterContext'
 import useMediaInfo from '../../hooks/useMediaInfo'
+import colors from '../../config/colors'
 
 export default function SearchBar(){
-  const {getYoutubeVideoInfo, getInstagramInfo} = useMediaInfo();
-
+  const {getYoutubeVideoInfo} = useMediaInfo();
+  const {restartInfo} = useContext(ConverterContext)
   const [search, setSearch] = useState('')
 
   const onChange = (e)=>{
@@ -22,20 +23,25 @@ export default function SearchBar(){
       getYoutubeVideoInfo({id: temp})
     }
   }
+  const onDelete = ()=>{
+    setSearch('')
+    restartInfo()
+  }
 
   return(
     <View style={styles.container}>
-      <AntDesign name="search1" size={22} color="#9B9B9B" />
+      <AntDesign name="search1" size={22} color={colors.textColor} />
       <TextInput
         style={styles.input}
         onChangeText={onChange}
         value={search}
         autoFocus={true}
+        placeholderTextColor={colors.textColor}
         placeholder="Link del video"
         keyboardType="url"
       />
-      <Pressable onPress={()=>setSearch('')}>
-        <Feather name="x" size={22} color="#9B9B9B" />
+      <Pressable onPress={onDelete}>
+        <Feather name="x" size={22} color={colors.textColor} />
       </Pressable>
     </View>
   )
@@ -49,12 +55,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: "white",
+    backgroundColor: colors.buttonColor,
     borderRadius: 10,
   },
   input:{
     width: "80%",
     fontSize: 17,
-    color: "#9B9B9B",
+    color: colors.textColor,
   }
 })

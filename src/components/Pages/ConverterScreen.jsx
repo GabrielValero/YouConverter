@@ -7,7 +7,8 @@ import Container from '../Templates/Container'
 import TextTemplate from '../Templates/TextTemplate'
 import SearchBar from '../Molecules/SearchBar'
 import VideoInfo from '../Molecules/VideoInfo'
-import DownloadButton from '../Atoms/DownloadButton'
+import DownloadIntructions from '../Molecules/DownloadIntructions'
+import DownloadFormatsButtons from '../Molecules/DownloadFormatsButtons'
 
 
 export default function ConverterScreen(){
@@ -17,13 +18,15 @@ export default function ConverterScreen(){
 		<Container>
 			<View style={{margin: 21, flex:1}}>
 				<SearchBar/>
-				{mediaInfo &&
+				{mediaInfo ?
 					<>
 						<VideoInfo/>
-						<View style={{width: "100%", marginVertical: 10, alignItems: "center"}}>
-							<DownloadButton/>
+						<View style={{width: "100%", marginVertical: 25}}>
+							<DownloadFormatsButtons/>
 						</View>
-					</>}
+					</>
+					: <View style={{width: "100%", height: "100%", alignItems: "center", justifyContent: "center"}}><DownloadIntructions/></View>
+				}
 
 			</View>
 		</Container>
