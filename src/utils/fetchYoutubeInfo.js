@@ -1,7 +1,7 @@
-import youtubeKey from '../config/Key'
+import {youtubeKey, youtubeApiUrl} from './config'
 
 export default function fetchVideoInfo({part = "snippet,contentDetails", videoId}){
-  return fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${youtubeKey}&part=${part}`)
+  return fetch(`${youtubeApiUrl}/videos?id=${videoId}&key=${youtubeKey}&part=${part}`)
     .then(response=>response.json())
     .then(res=>{
       return {
