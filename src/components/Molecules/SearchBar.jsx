@@ -5,40 +5,41 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 
 import TextTemplate from '../Templates/TextTemplate'
 import ConverterContext from '../../context/ConverterContext'
-import useMediaInfo from '../../hooks/useMediaInfo'
+import useYoutube from '../../hooks/useYoutube.jsx'
 import colors from '../../config/colors'
 
 export default function SearchBar(){
-  const {getYoutubeVideoInfo} = useMediaInfo();
+  const {getQueryResult} = useYoutube();
   const {restartInfo} = useContext(ConverterContext)
   const [search, setSearch] = useState('')
 
   const onChange = (e)=>{
     setSearch(e)
-    let temp;
-    if(e.includes('youtube.com/watch?v=') || e.includes('youtu.be/')){
-      if(e.includes('youtu.be/')) temp = e.slice(e.indexOf('.be/')+4);
-      else if(e.includes('youtube.com/watch?v=') && e.includes('&')) temp = e.slice(e.indexOf('v=')+2, e.indexOf('&'));
-      else temp = e.slice(e.indexOf('v=')+2);
-      getYoutubeVideoInfo({id: temp})
-    }
   }
-  const onDelete = ()=>{
+
+  const onSubmit = ()=>{
+    search.length > 1 && getQueryResult({search:search})
+  }
+
+  const onDelete = ()=>{ // Para resetear la busqueda
     setSearch('')
     restartInfo()
   }
 
   return(
     <View style={styles.container}>
-      <AntDesign name="search1" size={22} color={colors.textColor} />
+      <Pressable onPress={onSubmit}>
+        <AntDesign name="search1" size={22} color={colors.textColor} />
+      </Pressable>
       <TextInput
         style={styles.input}
         onChangeText={onChange}
-        value={search}
+        onSubmitEditing={onSubmit}
         autoFocus={true}
+        value={search}
         placeholderTextColor={colors.textColor}
         placeholder="Link del video"
-        keyboardType="url"
+        keyboardType="default"
       />
       <Pressable onPress={onDelete}>
         <Feather name="x" size={22} color={colors.textColor} />
