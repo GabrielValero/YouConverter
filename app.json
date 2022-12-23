@@ -4,6 +4,7 @@
     "slug": "YouConverter",
     "version": "1.0.0",
     "orientation": "portrait",
+    "entryPoint": "./index.js",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -29,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7ea12872-8ee9-4f52-8dbc-eeb8bc8d9b1b"
+      }
     }
   }
 }
