@@ -1,7 +1,7 @@
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { ConverterStack, DownLoadStack, HistoryStack } from '../Stack/ConverterStack'
+import { SearchStack, DownLoadStack, HistoryStack } from '../Stack/ConverterStack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import colors from '../../config/colors'
 
@@ -17,7 +17,7 @@ export default function ConverterTab(){
           tabBarShowLabel: false,
         })}
       >
-      <Tab.Screen name="ConverterTab" component={ConverterStack} options={{
+      <Tab.Screen name="ConverterTab" component={SearchStack} options={{
         tabBarIcon: ({focused, color, size=30}) =>(
           <MaterialIcons name="file-download" size={size} color={color} focused={focused} />
         )

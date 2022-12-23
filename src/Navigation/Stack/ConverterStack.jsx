@@ -1,17 +1,17 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ConverterScreen from '../../components/Pages/ConverterScreen'
+import SearchScreen from '../../components/Pages/SearchScreen'
 import DownLoadScreen from '../../components/Pages/DownLoadScreen'
 import HistoryScreen from '../../components/Pages/HistoryScreen'
 
 const Stack  = createNativeStackNavigator()
 
-export function ConverterStack(){
+export function SearchStack(){
 	return(
 		<>
 			<Stack.Navigator>
-        <Stack.Screen name="ConverterStack" component={ConverterScreen}  options={{headerShown:false}} />
+        <Stack.Screen name="SearchStack" component={SearchScreen}  options={{headerShown:false}} />
       </Stack.Navigator>
 		</>
 	)
@@ -31,8 +31,8 @@ export function HistoryStack(){
 	return(
 		<>
 			<Stack.Navigator>
-        <Stack.Screen name="HistoryStack" component={HistoryScreen} options={{headerShown:false}} />
-      </Stack.Navigator>
+				<Stack.Screen name="HistoryStack" component={HistoryScreen} options={{headerShown:false}} />
+			</Stack.Navigator>
 		</>
 	)
 }
