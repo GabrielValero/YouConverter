@@ -6,17 +6,17 @@ import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 
 import ConverterContext from '../../context/ConverterContext'
-import useDownloadFile from '../../hooks/useDownloadFile'
+//import useDownloadFile from '../../hooks/useDownloadFile'
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors'
 
 export default function DownloadButton({isVideo}){
-  const {downloadMedia} = useDownloadFile()
+  //const {downloadMedia} = useDownloadFile()
 
   const {mediaInfo, downloadInfo} = useContext(ConverterContext)
 
   const onPress = ()=>{
-    downloadMedia({isVideoDownloading: isVideo})
+    //downloadMedia({isVideoDownloading: isVideo})
   }
 
   return downloadInfo?.video ? (

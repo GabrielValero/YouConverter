@@ -2,17 +2,18 @@ import React, {useState} from 'react'
 
 const Converter = React.createContext('')
 
-export function ConverterContext({children}){
+export function ConverterProvider({children}){
 
   const [mediaInfo, setMediaInfo] = useState();
   const [downloadInfo, setDownloadInfo] = useState();
+  const [youtubeVideosList, setYoutubeVideosList] = useState([])
 
   const restartInfo = ()=>{
     setDownloadInfo(null)
     setMediaInfo(null)
   }
   return(
-    <Converter.Provider value={{mediaInfo, setMediaInfo, downloadInfo, setDownloadInfo, restartInfo}}>
+    <Converter.Provider value={{youtubeVideosList, setYoutubeVideosList,mediaInfo, setMediaInfo, downloadInfo, setDownloadInfo, restartInfo}}>
       {children}
     </Converter.Provider>
   )
