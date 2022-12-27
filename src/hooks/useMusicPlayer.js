@@ -25,7 +25,7 @@ export default function useMusicPlayer(){
 			console.log(song)
 			setTrack(song)
 			await TrackPlayer.add([song])
-			await TrackPlayer.skip(queue.length)
+			queue.length > 1 && await TrackPlayer.skip(queue.length)
 			playSong()
 		}
 	}
