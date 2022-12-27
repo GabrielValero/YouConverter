@@ -9,7 +9,7 @@ export default function CardVideo({item}){
 	return(
 			<View style={styles.card}>
 				<ImageTemplate url={item.artwork} style={{borderRadius: 28}} coverWidth coverHeight cover />
-				<PlayButton/>
+				<PlayButton song={item}/>
 			</View>
 		)
 }

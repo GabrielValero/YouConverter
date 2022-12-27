@@ -1,13 +1,24 @@
 import React from 'react'
-import {Image, View, StyleSheet} from 'react-native'
+import {Image, Pressable, View, StyleSheet} from 'react-native'
 
 import color from '../../config/colors.js'
 
-export default function PlayButton(){
+import useMusicPlayer from '../../hooks/useMusicPlayer'
+
+export default function PlayButton({song}){
+
+	const {setPlayList} = useMusicPlayer()
+
+	const onPress = ()=>{
+		setPlayList({song})
+	}
+
 	return(
-		<View style={styles.button}>
-			<Image source={require('../../../assets/PlayVector.png')} style={styles.image}/>
-		</View>	
+		<Pressable onPress={onPress}>
+			<View style={styles.button}>
+				<Image source={require('../../../assets/PlayVector.png')} style={styles.image}/>
+			</View>	
+		</Pressable>
 	)
 }
 
