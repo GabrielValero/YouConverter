@@ -2,7 +2,6 @@ import {useState, useContext, useEffect} from 'react'
 import TrackPlayer, { State, usePlaybackState } from 'react-native-track-player';
 
 import ReproductorContext from '../context/ReproductorContext'
-import downloadSource from '../utils/downloadSource'
 
 export default function useMusicPlayer(){
 
@@ -10,24 +9,8 @@ export default function useMusicPlayer(){
 	const [songIndex, setSongIndex] = useState()
 
 	const setPlayList = async ({song})=>{
-		const queue = await TrackPlayer.getQueue()
-
 		console.log("comenzando")
-
-		const songIsAdded = queue.some(e => e.title === song.title)
-		if(!songIsAdded){
-			const songUrl = await downloadSource(song.videoId)
-			.catch(err=>{
-				console.log(err)
-			})
-
-			song.url = songUrl.url
-			console.log(song)
-			setTrack(song)
-			await TrackPlayer.add([song])
-			queue.length > 1 && await TrackPlayer.skip(queue.length)
-			playSong()
-		}
+		await setTrackList(elem => elem.some(e => e.title === song.title) ? elem : elem.concat(song))
 	}
 
 	const playSong = async ()=>{
