@@ -35,7 +35,7 @@ export default function SearchBar(){
         style={styles.input}
         onChangeText={onChange}
         onSubmitEditing={onSubmit}
-        autoFocus={true}
+        autoFocus={false}
         value={search}
         placeholderTextColor={colors.textColor}
         placeholder="Link del video"
