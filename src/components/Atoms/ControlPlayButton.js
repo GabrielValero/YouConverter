@@ -4,25 +4,34 @@ import {Pressable, Image, StyleSheet} from 'react-native'
 import ReproductorContext from '../../context/ReproductorContext'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 
-export default function ControlPlayButton(){
+export default function ControlPlayButton({big}){
 	const {playSong} = useMusicPlayer()
 	const {isPlaying} = useContext(ReproductorContext)
 
+	const styleButton = [big && styles.big]
+
 	return(
-		<Pressable onPress={playSong}>
+		<Pressable onPress={playSong} style={styleButton}>
 			{isPlaying ?
-			<Image source={require('../../../assets/pause-icon.png')} style={styles.button}/>:
-			<Image source={require('../../../assets/PlayVector.png')} style={styles.button}/>}
+			<Image source={require('../../../assets/pause-icon.png')} style={styles.icon}/>:
+			<Image source={require('../../../assets/PlayVector.png')} style={styles.icon}/>}
 		</Pressable>
 		)
 }
 
 const styles = StyleSheet.create({
-	button:{
-		width: 33,
-		height: 33,
+	icon:{
+		width: 44,
+		height: 44,
 		resizeMode: 'contain',
-		paddingHorizontal: 5,
-		marginHorizontal: 10
+		paddingHorizontal: 5
+	},
+	big:{
+		width: 62,
+		height: 62,
+		backgroundColor: "#D04646",
+		borderRadius: 32,
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 })
