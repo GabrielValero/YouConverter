@@ -1,7 +1,7 @@
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { SearchStack, DownLoadStack, HistoryStack } from '../Stack/ConverterStack'
+import { SearchStack } from '../Stack/ConverterStack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import colors from '../../config/colors'
 

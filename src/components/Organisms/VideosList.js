@@ -14,7 +14,7 @@ export default function VideosList(){
 	        numColumns={2}
 	        renderItem={CardVideo}
 	        keyExtractor={item => item.videoId}
-	        contentContainerStyle={{paddingVertical: 20}}
+	        contentContainerStyle={{paddingVertical: 20, paddingBottom: 70}}
 	        columnWrapperStyle={{ flex: 1, justifyContent: "space-around", marginVertical: 10 }}
 	        showsVerticalScrollIndicator={false}
   			showsHorizontalScrollIndicator={false}

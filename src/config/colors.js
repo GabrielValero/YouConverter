@@ -4,8 +4,9 @@ const colors = {
   textColor: "#CACCD4",
   inactiveTextColor: "#2A2C39",
   buttonColor: "#474B63",
-  inactiveButtonColor: "#474B63",
-  pastelRed: '#D04646'
+  pastelRed: '#D04646',
+  whiteGray: '#F5F6F6',
+  backgroundApp: '#F5F6F6'
 }
 
 export default colors;

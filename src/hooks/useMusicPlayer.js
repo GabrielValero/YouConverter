@@ -2,6 +2,7 @@ import {useState, useContext, useEffect} from 'react'
 import TrackPlayer, { State, usePlaybackState } from 'react-native-track-player';
 
 import ReproductorContext from '../context/ReproductorContext'
+import getContentDuration from '../utils/getContentDuration'
 
 export default function useMusicPlayer(){
 
@@ -10,6 +11,8 @@ export default function useMusicPlayer(){
 
 	const setPlayList = async ({song})=>{
 		console.log("comenzando")
+		const duration = await getContentDuration(song.videoId)
+		song.duration = duration
 		await setTrackList(elem => elem.some(e => e.title === song.title) ? elem : elem.concat(song))
 	}
 
@@ -17,7 +20,6 @@ export default function useMusicPlayer(){
 		const state = await TrackPlayer.getState();
 		state === State.Playing ? (TrackPlayer.pause(), setIsPlaying(false)) 
 			: (TrackPlayer.play(), setIsPlaying(true))
-		console.log(state)
 
 	}
 	const playNextSong = async ()=>{
@@ -35,13 +37,22 @@ export default function useMusicPlayer(){
 		console.log(`Title: ${trackObject.title}`);
 	}
 
-
+	const seekTo = async (value)=>{
+		await TrackPlayer.seekTo(value[0])
+	}
+	const setRepeatMode = async (index)=>{
+		await TrackPlayer.setRepeatMode(index)
+		const repeatMode = await TrackPlayer.getRepeatMode()
+		console.log(repeatMode)
+	}
 
 	return{
 		setPlayList,
 		playSong,
 		playNextSong,
-		playPreviewSong
+		playPreviewSong,
+		seekTo,
+		setRepeatMode
 	}
 
 }

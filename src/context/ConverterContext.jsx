@@ -4,16 +4,18 @@ const Converter = React.createContext('')
 
 export function ConverterProvider({children}){
 
-  const [mediaInfo, setMediaInfo] = useState();
   const [downloadInfo, setDownloadInfo] = useState();
-  const [youtubeVideosList, setYoutubeVideosList] = useState([])
-
+  
+  const [youtubeVideosList, setYoutubeVideosList] = useState([]) // resultados de busqueda
+  const [converterMessages, setConverterMessages] = useState([]) // por si la descargar resulta exitosa o con errores
+  
   const restartInfo = ()=>{
     setDownloadInfo(null)
-    setMediaInfo(null)
   }
+  
   return(
-    <Converter.Provider value={{youtubeVideosList, setYoutubeVideosList,mediaInfo, setMediaInfo, downloadInfo, setDownloadInfo, restartInfo}}>
+    <Converter.Provider value={{youtubeVideosList, setYoutubeVideosList, downloadInfo, setDownloadInfo, restartInfo, converterMessages, 
+      setConverterMessages}}>
       {children}
     </Converter.Provider>
   )

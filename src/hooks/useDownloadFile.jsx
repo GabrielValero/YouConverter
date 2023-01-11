@@ -2,34 +2,30 @@ import React, {useContext, useState} from 'react'
 import {Platform, PermissionsAndroid, Alert} from 'react-native'
 import * as Permissions from 'expo-permissions';
 import RNFetchBlob from "rn-fetch-blob";
-
-import ConverterContext from '../context/ConverterContext'
-
+import TrackPlayer from 'react-native-track-player';
 
 export default function useDownLoadFile(){
 
-  const {mediaInfo, downloadInfo} = useContext(ConverterContext)
-
-  const downloadMedia = async ({setProgress, isVideoDownloading})=>{
+  const downloadMedia = async ()=>{
     const permission = await requestToPermissions()
 
-    const url = isVideoDownloading ? downloadInfo.video.url : downloadInfo.audio.url
+    let trackIndex = await TrackPlayer.getCurrentTrack();
+    let track = await TrackPlayer.getTrack(trackIndex);
 
     permission ?
     RNFetchBlob.config({
       fileCache : true,
-      appendExt: isVideoDownloading ? "mp4" : 'mp3',
+      appendExt: 'mp3',
       addAndroidDownloads : {
         useDownloadManager: true,
         notification : true,
-        title : mediaInfo.title,
-        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${mediaInfo.title}${isVideoDownloading ? ".mp4" : '.mp3'}`,
-        description: 'You Converter',
+        title : track.title,
+        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${track.title}'.mp3'`,
+        description: 'You Converter Downloading'
       }
-    }).fetch("GET", url, {'Content-Type': 'application/json'})
+    }).fetch("GET", track.url, {'Content-Type': 'application/json'})
       .progress((received, total) => {
         console.log("progress", received / total);
-        setProgress(received / total)
       })
       .then((res) => {
         // the temp file path
@@ -38,19 +34,31 @@ export default function useDownLoadFile(){
       .catch((errorMessage, statusCode) => {
           console.log("errorMessage", errorMessage)
           console.log("statusCode", statusCode)
+          Alert.alert(
+            "Hubo un error!!!",
+            "Puede ser por falta de internet quien sabe",
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "Try again", onPress: () =>  downloadMedia}
+            ]
+          )
         })
     : Alert.alert(
-      "FALTAN PERMISOS!!!",
-      "Negaste permisos que necesitas para descargar un video o canción",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Dar permiso", onPress: () =>  downloadMedia}
-      ]
-    );
+        "FALTAN PERMISOS!!!",
+        "Negaste permisos que necesitas para descargar un video o canción",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "Dar permiso", onPress: () =>  downloadMedia}
+        ]
+      )
   }
 
   return {

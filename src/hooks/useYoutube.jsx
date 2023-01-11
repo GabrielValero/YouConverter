@@ -6,8 +6,9 @@ import fetchYoutubeInfo from '../utils/fetchYoutubeInfo'
 import searchYoutubeResults from '../utils/searchYoutubeResults'
 import downloadSource from '../utils/downloadSource'
 
+
 export default function useYoutube(){
-  const {setMediaInfo, setDownloadInfo, setYoutubeVideosList} = useContext(ConverterContext)
+  const { setYoutubeVideosList} = useContext(ConverterContext)
 
   useEffect(()=>{
     searchResultsByKey({key: "Song for daisy"})
@@ -26,19 +27,18 @@ export default function useYoutube(){
     }
   }
 
-  const searchVideoById = async ({id})=>{
-    const response = await fetchYoutubeInfo({videoId:id});
-    setMediaInfo(response)
-
-    const downloadUrl = await downloadSource({id: id})
-    setDownloadInfo(downloadUrl)
-  }
+//   const searchVideoById = async ({id})=>{
+//     const response = await fetchYoutubeInfo({videoId:id});
+//     setMediaInfo(response)
+// 
+//     const downloadUrl = await downloadSource({id: id})
+//     setDownloadInfo(downloadUrl)
+//   }
 
   const searchResultsByKey = async ({key})=>{
     const result = await searchYoutubeResults(key)
     setYoutubeVideosList(result)
   }
-
   return{
     getQueryResult
   }

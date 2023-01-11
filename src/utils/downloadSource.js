@@ -9,7 +9,7 @@ export async function downloadSource(id){
 
 }
 
-export function downloadSourceAlternative(id){
+export default function downloadSourceAlternative(id){
 	const link = `https://youtube-video-info.p.rapidapi.com/video_formats?video=${id}`
 
 	return fetch(link,{
@@ -28,7 +28,7 @@ export function downloadSourceAlternative(id){
   })
 }
 
-export default function downloadSourceOtherAlternative(id){
+export  function downloadSourceOtherAlternative(id){
   const link = `https://youtube-music-downloader-mp3.p.rapidapi.com/get_download_url?id=${id}&ext=mp3`
 
   return fetch(link,{
