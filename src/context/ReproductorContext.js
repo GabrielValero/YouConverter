@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import TrackPlayer,{ usePlaybackState, Capability, RepeatMode } from 'react-native-track-player';
+import TrackPlayer,{ usePlaybackState, Capability, RepeatMode, useTrackPlayerEvents, Event } from 'react-native-track-player';
 
 import downloadSource from '../utils/downloadSource'
 
@@ -24,10 +24,21 @@ async function setup() { // inicializa el track player
 export function ReproductorProvider({children}){
 
 	const [trackList, setTrackList] = useState([]) // La lista de reproduccion
-	const [track, setTrack] = useState() // El track que se esta reproduciendo
-	const [isPlaying, setIsPlaying] = useState(false) // Es true si se esta reproduciendo algo
+	const [track, setTrack] = useState(null) // El track que se esta reproduciendo
+	const [playState, setPlayState] = useState("paused") // Es true si se esta reproduciendo algo
 
 	const playbackState  = usePlaybackState()
+	const events = [
+	  Event.PlaybackState,
+	  Event.PlaybackError,
+	  Event.PlaybackTrackChanged
+	];
+
+	useTrackPlayerEvents(events, (e)=>{
+		console.log("event", e)
+		e.state === "idle" && (setTrackList([]), setTrack(null));
+		setPlayState(e.state)
+	});
 
 	const processTracks = async ()=>{
 		let songQueue = await TrackPlayer.getQueue()
@@ -66,17 +77,12 @@ export function ReproductorProvider({children}){
 	},[])
 
 	useEffect(()=>{
-		console.log("state ", playbackState )
-		playbackState === "playing" ? setIsPlaying(true) : setIsPlaying(false)
-	},[playbackState])
-
-	useEffect(()=>{
 		trackList.length > 0 && processTracks()
 	},[trackList])
 
 
 	return(
-		<ReproductorContext.Provider value={{trackList, setTrackList, track, setTrack, isPlaying, setIsPlaying}}>
+		<ReproductorContext.Provider value={{trackList, setTrackList, track, setTrack, playState, setPlayState}}>
 			{children}
 		</ReproductorContext.Provider>
 		)

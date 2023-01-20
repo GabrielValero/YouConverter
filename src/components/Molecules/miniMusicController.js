@@ -12,16 +12,17 @@ import ControlPreviousButton from '../Atoms/ControlPreviousButton'
 
 export default function MiniMusicController(){
 
-	const {track, isPlaying} = useContext(ReproductorContext)
+	const {trackList, track} = useContext(ReproductorContext)
 	const navigation = useNavigation();
-	const moveTo = () => navigation.navigate('MusicPlayerStack')
-	return track ? (
+	const moveTo = () => track && navigation.navigate('MusicPlayerStack')
+
+	return trackList.length > 0 ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>
-				<ImageTemplate url={track.artwork} style={{borderRadius: 42, width: 42, height: 42}} cover />
+				<ImageTemplate url={track?.artwork} style={{borderRadius: 42, width: 42, height: 42}} cover />
 				<View style={styles.text}>
 					<TextTemplate noWrap title>
-						{track.title}
+						{track?.title}
 					</TextTemplate>
 				</View>
 			</Pressable>

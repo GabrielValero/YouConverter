@@ -6,7 +6,7 @@ import getContentDuration from '../utils/getContentDuration'
 
 export default function useMusicPlayer(){
 
-	const {trackList, setTrackList, track, setTrack, isPlaying, setIsPlaying} = useContext(ReproductorContext)
+	const {trackList, setTrackList, track, setTrack} = useContext(ReproductorContext)
 	const [songIndex, setSongIndex] = useState()
 
 	const setPlayList = async ({song})=>{
@@ -18,8 +18,7 @@ export default function useMusicPlayer(){
 
 	const playSong = async ()=>{
 		const state = await TrackPlayer.getState();
-		state === State.Playing ? (TrackPlayer.pause(), setIsPlaying(false)) 
-			: (TrackPlayer.play(), setIsPlaying(true))
+		state === State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
 
 	}
 	const playNextSong = async ()=>{
