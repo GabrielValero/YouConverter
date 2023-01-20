@@ -11,7 +11,7 @@ export default function useYoutube(){
   const { setYoutubeVideosList} = useContext(ConverterContext)
 
   useEffect(()=>{
-    searchResultsByKey({key: "Song for daisy"})
+    searchResultsByKey({key: "jt music"})
   }, [])
 
   const getQueryResult = ({search})=>{

@@ -18,7 +18,7 @@ export default function ConverterScreen(){
 				<SearchBar/>
 				<VideosList/>
 			</View>
-				<MiniMusicController/>
+			<MiniMusicController/>
 		</Container>
 	)
 }

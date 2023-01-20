@@ -20,7 +20,7 @@ export default function useDownLoadFile(){
         useDownloadManager: true,
         notification : true,
         title : track.title,
-        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${track.title}'.mp3'`,
+        path: `${RNFetchBlob.fs.dirs.DownloadDir}/${track.title}.mp3`,
         description: 'You Converter Downloading'
       }
     }).fetch("GET", track.url, {'Content-Type': 'application/json'})
