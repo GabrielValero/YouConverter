@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   text:{
     fontSize: 17,
     color: colors.textColor,
+    letterSpacing: 1,
   },
   title:{
     fontWeight: 'bold',

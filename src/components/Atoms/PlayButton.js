@@ -27,12 +27,17 @@ const styles = StyleSheet.create({
 		height: 44,
 		borderRadius: 44,
 		backgroundColor: color.pastelRed,
-		position: 'absolute',
-		bottom: 10,
-		right: 10,
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+	container:{
+		padding: 15,
+	},
+	touchable:{
+		position: 'absolute',
+		bottom: 0,
+		right: 0,
 	},
 	image:{
 		width: '70%',

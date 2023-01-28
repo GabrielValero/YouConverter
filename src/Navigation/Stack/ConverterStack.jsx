@@ -5,7 +5,7 @@ import MusicPlayerScreen from '../../components/Pages/MusicPlayerScreen'
 import SearchScreen from '../../components/Pages/SearchScreen'
 import DownLoadScreen from '../../components/Pages/DownLoadScreen'
 import HistoryScreen from '../../components/Pages/HistoryScreen'
-
+import MusicOptionsModalScreen from '../../components/Pages/MusicOptionsModalScreen'
 
 const RootStack = createStackNavigator()
 
@@ -18,6 +18,9 @@ export function SearchStack(){
 		    	</RootStack.Group>
 		    	<RootStack.Group screenOptions={{ presentation: 'modal' }}>
 		    		<RootStack.Screen name="MusicPlayerStack" component={MusicPlayerScreen}  options={{headerShown:false}} />
+		    	</RootStack.Group>
+		    	<RootStack.Group screenOptions={{ presentation: 'transparentModal' }}>
+		    		<RootStack.Screen name="MusicOptions" component={MusicOptionsModalScreen}  options={{headerShown:false}} />
 		    	</RootStack.Group>
 		    </RootStack.Navigator>
 		</>

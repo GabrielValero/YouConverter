@@ -10,6 +10,8 @@ import ControlNextButton from '../Atoms/ControlNextButton'
 import ControlPlayButton from '../Atoms/ControlPlayButton'
 import ControlPreviousButton from '../Atoms/ControlPreviousButton'
 
+import colors from '../../config/colors'
+
 export default function MiniMusicController(){
 
 	const {trackList, track} = useContext(ReproductorContext)
@@ -19,7 +21,7 @@ export default function MiniMusicController(){
 	return trackList.length > 0 ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>
-				<ImageTemplate url={track?.artwork} style={{borderRadius: 42, width: 42, height: 42}} cover />
+				<ImageTemplate url={track?.artwork} style={{borderRadius: 42, width: 42, height: 42, backgroundColor: colors.backgroundApp}} cover />
 				<View style={styles.text}>
 					<TextTemplate noWrap title>
 						{track?.title}

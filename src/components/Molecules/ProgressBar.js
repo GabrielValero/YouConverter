@@ -19,12 +19,12 @@ export default function ProgressBar(){
 	return(
 		<View style={styles.container}>
 			<View style={styles.progressBarContainer}>
-				<View style={[styles.bufferBar, styles.progressBar, {width: `${buffered*100/track.duration}%`}]}></View>
+				<View style={[styles.bufferBar, styles.progressBar, {width: `${track?.duration ? buffered*100/track.duration : "0"}%`}]}></View>
 				<Slider
 					value={position}
 					animateTransitions={true}
 					minimumValue={0}
-					maximumValue={track.duration}
+					maximumValue={track?.duration}
 					trackClickable={true}
 					containerStyle={styles.progressBar}
 					maximumTrackTintColor={"transparent"}
@@ -37,10 +37,10 @@ export default function ProgressBar(){
 			</View>
 			<View style={styles.timeContainer}>
 				<TextTemplate small bold>
-					{`${parseInt(position/60)}:${parseInt(position%60)}`}
+					{position ? `${parseInt(position/60)}:${parseInt(position%60)}` : "0:00"}
 				</TextTemplate>
 				<TextTemplate small bold>
-					{`${parseInt(track.duration/60)}:${parseInt(track.duration%60)}`}
+					{track?.duration ? `${parseInt(track.duration/60)}:${parseInt(track.duration%60)}` : "0:00"}
 				</TextTemplate>
 			</View>
 		</View>
@@ -55,7 +55,7 @@ export default function ProgressBar(){
 const styles = StyleSheet.create({
 	container:{
 		width: "100%",
-		height: 70,
+		marginBottom: 10,
 		alignItems: 'center'
 	},
 	timeContainer:{

@@ -1,5 +1,6 @@
 import {useState, useContext, useEffect} from 'react'
 import TrackPlayer, { State, usePlaybackState } from 'react-native-track-player';
+import { useNavigation } from '@react-navigation/native';
 
 import ReproductorContext from '../context/ReproductorContext'
 import getContentDuration from '../utils/getContentDuration'
@@ -8,6 +9,7 @@ export default function useMusicPlayer(){
 
 	const {trackList, setTrackList, track, setTrack} = useContext(ReproductorContext)
 	const [songIndex, setSongIndex] = useState()
+	const navigation = useNavigation();
 
 	const setPlayList = async ({song})=>{
 		console.log("comenzando")
@@ -35,7 +37,6 @@ export default function useMusicPlayer(){
 		setTrack(trackObject)
 		console.log(`Title: ${trackObject.title}`);
 	}
-
 	const seekTo = async (value)=>{
 		await TrackPlayer.seekTo(value[0])
 	}
@@ -44,6 +45,11 @@ export default function useMusicPlayer(){
 		const repeatMode = await TrackPlayer.getRepeatMode()
 		console.log(repeatMode)
 	}
+	const resetPlayList = async()=>{
+		await TrackPlayer.reset()
+		setTrackList([])
+		setTrack(null)
+	}
 
 	return{
 		setPlayList,
@@ -51,7 +57,8 @@ export default function useMusicPlayer(){
 		playNextSong,
 		playPreviewSong,
 		seekTo,
-		setRepeatMode
+		setRepeatMode,
+		resetPlayList,
 	}
 
 }

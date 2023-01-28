@@ -9,7 +9,7 @@ import DownloadButton from '../Atoms/DownloadButton'
 
 export default function PlayerControllers(){
 	return(
-		<View style={[styles.center, {width: "100%",justifyContent: 'space-around', heigbt: 90}]}>
+		<View style={[styles.center, {width: "100%",justifyContent: 'space-around'}]}>
 			<ControlRepeatButton/>
 			<View style={styles.center}>
 				<ControlPreviousButton big/>

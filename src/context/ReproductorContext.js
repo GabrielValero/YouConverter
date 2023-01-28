@@ -34,9 +34,15 @@ export function ReproductorProvider({children}){
 	  Event.PlaybackTrackChanged
 	];
 
-	useTrackPlayerEvents(events, (e)=>{
+	useTrackPlayerEvents(events, async (e)=>{
 		console.log("event", e)
-		e.state === "idle" && (setTrackList([]), setTrack(null));
+		
+		// if(e.state === "idle"){
+		// 	await TrackPlayer.reset()
+		// 	setTrackList([])
+		// 	setTrack(null)
+		// }
+		
 		setPlayState(e.state)
 	});
 

@@ -5,6 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import ImageTemplate from '../Templates/ImageTemplate'
 import TextTemplate from '../Templates/TextTemplate'
 import ReproductorContext from '../../context/ReproductorContext'
+import TrackMenuButton from '../Atoms/TrackMenuButton'
+import PlayListButton from '../Atoms/PlayListButton'
+
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function TrackPlayerInfo(){
 	const navigation = useNavigation()
@@ -13,17 +17,22 @@ export default function TrackPlayerInfo(){
 	const onPress= ()=> navigation.goBack()
 	return(
 		<View style={styles.container}>
-			<View style={styles.background}></View>
-			<Pressable onPress={onPress} style={styles.iconContainer}>
-				<Image source={require('../../../assets/downButton.png')} style={styles.icon}/>
-			</Pressable>
+			<View style={styles.iconContainer}>
+				<Pressable onPress={onPress}>
+					<FontAwesome name="angle-down" size={30} color="white" />
+				</Pressable>
+				<TrackMenuButton/>
+			</View>
 			<View style={{alignItems: 'center'}}>
 				<View style={styles.imageContainer}>
-					<ImageTemplate url={track.artwork} style={{borderRadius: 30}} coverWidth coverHeight cover/>
+					<ImageTemplate url={track?.artwork} style={{borderRadius: 30}} coverWidth coverHeight cover/>
 				</View>
 				<TextTemplate title bold noWrap style={styles.text}>
-					{track.title}
+					{track?.title}
 				</TextTemplate>
+			</View>
+			<View style={styles.iconContainer}>
+				<PlayListButton styles={{marginLeft: 'auto'}}/>
 			</View>
 		</View>
 	)
@@ -34,11 +43,7 @@ const styles = StyleSheet.create({
 		marginHorizontal: 35,
 	},
 	container:{
-		width: '100%',
-		height: "80%",
-		paddingVertical: 50,
 		position: 'relative',
-		justifyContent: 'space-around',
 		alignItems: 'center',
 	},
 	imageContainer:{
@@ -50,15 +55,14 @@ const styles = StyleSheet.create({
 		flexDirection: 'row'
 
 	},
-	icon: {
-		width: 37,
-		height: 37,
-		resizeMode: 'contain',
-	},
 	iconContainer:{
-		top: 33,
-		left: 20,
-		position: 'absolute'
+		width: "100%",
+		height: 70,
+		paddingHorizontal: 30,
+		alignItems: 'center',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+
 	},
 	background:{
 		width: "100%",
