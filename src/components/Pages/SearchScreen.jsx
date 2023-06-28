@@ -11,7 +11,6 @@ import MiniMusicController from '../Molecules/miniMusicController'
 
 export default function ConverterScreen(){
 
-	const {mediaInfo} = useContext(ConverterContext)
 	return(
 		<Container>
 			<View style={{margin: 21, flex:1}}>
