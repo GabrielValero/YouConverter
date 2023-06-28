@@ -3,7 +3,8 @@ import TrackPlayer, { State, usePlaybackState } from 'react-native-track-player'
 import { useNavigation } from '@react-navigation/native';
 
 import ReproductorContext from '../context/ReproductorContext'
-import getContentDuration from '../utils/getContentDuration'
+
+import isNotAdded from '../utils/isNotAdded'
 
 export default function useMusicPlayer(){
 
@@ -11,11 +12,14 @@ export default function useMusicPlayer(){
 	const [songIndex, setSongIndex] = useState()
 	const navigation = useNavigation();
 
-	const setPlayList = async ({song})=>{
-		console.log("comenzando")
-		const duration = await getContentDuration(song.videoId)
-		song.duration = duration
-		await setTrackList(elem => elem.some(e => e.title === song.title) ? elem : elem.concat(song))
+	const addSong = async ({song})=>{
+		console.log("comenzando", song)
+		isNotAdded(trackList, song) ? (
+			setTrackList([...trackList, song]),
+			await TrackPlayer.add([song])
+			) : null
+		const tmp = await TrackPlayer.getQueue()
+		console.log(tmp)
 	}
 
 	const playSong = async ()=>{
@@ -50,9 +54,8 @@ export default function useMusicPlayer(){
 		setTrackList([])
 		setTrack(null)
 	}
-
 	return{
-		setPlayList,
+		addSong,
 		playSong,
 		playNextSong,
 		playPreviewSong,

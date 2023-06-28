@@ -2,7 +2,6 @@ import React from 'react'
 import {View, Image, StyleSheet} from 'react-native'
 
 import PlayButton from '../Atoms/PlayButton'
-import TextTemplate from '../Templates/TextTemplate'
 import ImageTemplate from '../Templates/ImageTemplate'
 
 export default function CardVideo({item}){

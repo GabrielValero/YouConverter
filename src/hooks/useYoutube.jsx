@@ -2,44 +2,52 @@ import React, {useContext, useEffect} from 'react'
 
 import ConverterContext from '../context/ConverterContext'
 
-import fetchYoutubeInfo from '../utils/fetchYoutubeInfo'
-import searchYoutubeResults from '../utils/searchYoutubeResults'
+
+import getVideosList from '../utils/getVideosList'
 import downloadSource from '../utils/downloadSource'
 
 
 export default function useYoutube(){
-  const { setYoutubeVideosList} = useContext(ConverterContext)
+	
+	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
 
-  useEffect(()=>{
-    searchResultsByKey({key: "jt music"})
-  }, [])
+	useEffect(()=>{
+		searchByKey({key: "jt music"})
+	}, [])
 
-  const getQueryResult = ({search})=>{
-    if(search.includes('youtube.com/watch?v=') || search.includes('youtu.be/')){
-      let temp; 
-      if(search.includes('youtu.be/')) temp = search.slice(search.indexOf('.be/')+4);
-      else if(search.includes('youtube.com/watch?v=') && search.includes('&')) temp = search.slice(search.indexOf('v=')+2, search.indexOf('&'));
-      else temp = search.slice(search.indexOf('v=')+2);
-      searchVideoById({id: temp})
+	const getQueryResult = ({search})=>{
+		const isYoutubeLink = search.includes('youtube.com/watch?v=') || search.includes('youtu.be/')
+		let temp; 
 
-    }else{
-      searchResultsByKey({key: search})
-    }
-  }
+		if(isYoutubeLink){
+			if(search.includes('youtu.be/')) temp = search.slice(search.indexOf('.be/')+4); // If url is mobile version.
+			else if(search.includes('youtube.com/watch?v=') && search.includes('&')) temp = search.slice(search.indexOf('v=')+2, search.indexOf('&')); // If url is web version and include &.
+			else temp = search.slice(search.indexOf('v=')+2); // if url is web version and don´t include &
+			searchVideoById({id: temp})
 
-//   const searchVideoById = async ({id})=>{
-//     const response = await fetchYoutubeInfo({videoId:id});
-//     setMediaInfo(response)
-// 
-//     const downloadUrl = await downloadSource({id: id})
-//     setDownloadInfo(downloadUrl)
-//   }
+		}else{
+			searchByKey({key: search})
+		}
+	}
 
-  const searchResultsByKey = async ({key})=>{
-    const result = await searchYoutubeResults(key)
-    setYoutubeVideosList(result)
-  }
-  return{
-    getQueryResult
-  }
+	const searchVideoById = async ({id})=>{
+		try{
+			const downloadUrl = await downloadSource({id: id})
+			setDownloadInfo(downloadUrl)
+		}catch(err){
+			throw new Error(`Fallo al obtener el link de descarga. error: ${err.message}`)
+		}
+	}
+
+	const searchByKey = async ({key})=>{
+		try{
+			const result = await getVideosList(key)
+			console.log(result);
+			setYoutubeVideosList(result)
+		}catch(err){
+			throw new Error(`Fallo al obtener la lista de canciones. error: ${err.message}`)
+		}
+	} 
+
+	return{getQueryResult}
 }

@@ -47,6 +47,7 @@ export function ReproductorProvider({children}){
 	});
 
 	const processTracks = async ()=>{
+		console.log("Esta pasando por aqui creo");
 		let songQueue = await TrackPlayer.getQueue()
 		const processingList = trackList.filter(a=> !songQueue.some(b=> b.title === a.title) && a) // obtiene solo los tracks de trackList que no esten en Queue para añadirlos despues
 		processingList.length > 0 && processingList
@@ -82,9 +83,6 @@ export function ReproductorProvider({children}){
 		
 	},[])
 
-	useEffect(()=>{
-		trackList.length > 0 && processTracks()
-	},[trackList])
 
 
 	return(
