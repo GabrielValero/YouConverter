@@ -73,3 +73,33 @@ export async function PlaybackService() {
     console.log('Event.PlaybackProgressUpdated', event);
   });
 }
+
+export async function setupPlayer() { // inicializa el track player
+	let isSetup = false;
+	try {
+		await TrackPlayer.getCurrentTrack();
+		isSetup = true;
+	}catch{
+		await TrackPlayer.setupPlayer()
+		await TrackPlayer.updateOptions({
+			capabilities: [
+				Capability.Play,
+				Capability.Pause,
+				Capability.SkipToNext,
+				Capability.SkipToPrevious,
+				Capability.Stop,
+				Capability.SeekTo,
+			],
+			compactCapabilities: [
+				Capability.Play,
+				Capability.Pause,
+				Capability.SkipToNext,
+			],
+			progressUpdateEventInterval: 2,
+		})
+		isSetup = true;
+	
+	}finally{
+		return isSetup;
+	}  
+}
