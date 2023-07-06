@@ -9,10 +9,10 @@ import ButtonAnimated from "./ButtonAnimated"
 export default function PlayButton({song}){
 
 
-	const {setPlayList} = useMusicPlayer()
+	const {addSong} = useMusicPlayer()
 
 	const onPress = ()=>{
-		setPlayList({song})
+		addSong({song})
 	}
 	const source = require('../../../assets/PlayVector.png')
 

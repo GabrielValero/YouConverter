@@ -18,7 +18,7 @@ export default function MiniMusicController(){
 	const navigation = useNavigation();
 	const moveTo = () => track && navigation.navigate('MusicPlayerStack')
 
-	return trackList.length > 0 ? (
+	return track ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>
 				<ImageTemplate url={track?.artwork} style={{borderRadius: 42, width: 42, height: 42, backgroundColor: colors.backgroundApp}} cover />

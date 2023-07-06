@@ -5,13 +5,13 @@ import ReproductorContext from '../../context/ReproductorContext'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 
 export default function ControlPlayButton({big}){
-	const {playSong} = useMusicPlayer()
+	const {playAndPause} = useMusicPlayer()
 	const {playState} = useContext(ReproductorContext)
 
 	const styleButton = [big && styles.big]
 
 	return(
-		<Pressable onPress={playSong} style={styleButton}>
+		<Pressable onPress={playAndPause} style={styleButton}>
 			{playState === "playing" ?
 			<Image source={require('../../../assets/pause-icon.png')} style={styles.icon}/>:
 			<Image source={require('../../../assets/PlayVector.png')} style={styles.icon}/>}
