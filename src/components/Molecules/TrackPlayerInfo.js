@@ -1,76 +1,60 @@
 import React, {useContext} from 'react'
-import {View, Image, StyleSheet, Pressable} from 'react-native'
+import {View, StyleSheet, useWindowDimensions} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import ImageTemplate from '../Templates/ImageTemplate'
-import TextTemplate from '../Templates/TextTemplate'
 import ReproductorContext from '../../context/ReproductorContext'
-import TrackMenuButton from '../Atoms/TrackMenuButton'
-import PlayListButton from '../Atoms/PlayListButton'
 
-import { FontAwesome } from '@expo/vector-icons';
+import colors from '../../config/colors';
 
 export default function TrackPlayerInfo(){
-	const navigation = useNavigation()
+	
 	const {track} = useContext(ReproductorContext)
+	const {width} = useWindowDimensions();
+	//
 
-	const onPress= ()=> navigation.goBack()
+	const styleComponent = [styles.imageContainer, {width: width*0.8, height: width*0.8 }]
 	return(
-		<View style={styles.container}>
-			<View style={styles.iconContainer}>
-				<Pressable onPress={onPress}>
-					<FontAwesome name="angle-down" size={30} color="white" />
-				</Pressable>
-				<TrackMenuButton/>
-			</View>
-			<View style={{alignItems: 'center'}}>
-				<View style={styles.imageContainer}>
-					<ImageTemplate url={track?.artwork} style={{borderRadius: 30}} coverWidth coverHeight cover/>
+		<View style={styleComponent}>
+			<View style={styles.outStrock}>
+				<View style={styles.circle}>
+				<ImageTemplate url={track?.artwork} style={styles.image} coverWidth coverHeight cover/>
 				</View>
-				<TextTemplate title bold noWrap style={styles.text}>
-					{track?.title}
-				</TextTemplate>
 			</View>
-			<View style={styles.iconContainer}>
-				<PlayListButton styles={{marginLeft: 'auto'}}/>
-			</View>
-		</View>
+			
+		</View>	
 	)
 }
 
 const styles = StyleSheet.create({
-	text: {
-		marginHorizontal: 35,
-	},
-	container:{
-		position: 'relative',
-		alignItems: 'center',
-	},
 	imageContainer:{
 		width: "70%",
-		height: 370,
 		marginBottom: 30,
 		alignItems: 'center',
 		justifyContent: "center",
 		flexDirection: 'row'
-
 	},
-	iconContainer:{
-		width: "100%",
-		height: 70,
-		paddingHorizontal: 30,
-		alignItems: 'center',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-
+	outStrock:{
+		width: '100%',
+		height: '100%',
+		padding: 10,
+		borderRadius: 10000,
+		backgroundColor: 'transparent',
+		borderWidth: 8,
+		borderColor: colors.buttonColor,
+		position: 'relative',
+		overflow: 'hidden',
 	},
-	background:{
+	circle:{
 		width: "100%",
-		height: 270,
-		backgroundColor: "#E56464",
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		zIndex:0
-	}
+		height: "100%",
+		backgroundColor: '#fff',
+		borderRadius: 10000,
+		overflow: 'hidden',
+	},
+	image:{
+		width: "100%",
+		height: "100%",
+		
+	},
 })
