@@ -6,6 +6,7 @@ import ReproductorContext from '../context/ReproductorContext'
 
 import isNotAdded from '../utils/isNotAdded'
 import downloadSource from '../utils/downloadSource'
+//import { onDisplayNotification } from '../utils/notificationController';
 
 export default function useMusicPlayer(){
 
@@ -30,8 +31,13 @@ export default function useMusicPlayer(){
 		
 		await TrackPlayer.reset()
 		await TrackPlayer.add([song])
+		
+		//onDisplayNotification(song)
+
 		await TrackPlayer.play()
 		
+
+
 		setPlayState("playing")
 	}
 	const isPlaying = async ()=>{ // return true if is playing any song
