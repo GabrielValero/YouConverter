@@ -1,26 +1,30 @@
 import React,{useContext, useState} from 'react'
 import {Pressable, Image, StyleSheet} from 'react-native'
 
-import useDownloadFile from '../../hooks/useDownloadFile'
-import colors from '../../config/colors.js'
-import ButtonAnimated from './ButtonAnimated'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 
-export default function ControlRandomButton(){
+import useDownloadFile from '../../hooks/useDownloadFile'
+import ButtonAnimated from './ButtonAnimated'
+import colors from '../../config/colors.js'
+import dimens from '../../config/dimens';
+
+
+
+export default function DownloadButton({item}){
 	
-	const [isReady, setIsReady] = useState(true)
 	const {downloadMedia} = useDownloadFile()
 
 	const onPress = ()=>{
-		isReady && (setIsReady(false), downloadMedia())
-		setTimeout(()=>{
-			setIsReady(true)
-		}, 3000)
+		console.log("DB ",item);
+		downloadMedia(item)
 	}
 
 	const source = require('../../../assets/downloadIcon.png')
 
 	return(
-		<ButtonAnimated styles={styles} source={source} onClick={onPress}/>
+		<ButtonAnimated styles={styles} source={source} onClick={onPress}>
+			<MaterialCommunityIcons name="download" size={dimens.iconsSmall} color={colors.buttonColor} style={{marginRight: 10}}/>
+		</ButtonAnimated>
 	)
 }
 

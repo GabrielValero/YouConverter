@@ -1,12 +1,15 @@
 import React from 'react'
-import {StyleSheet} from 'react-native'
+import {Pressable, StyleSheet} from 'react-native'
+
+import { Ionicons } from '@expo/vector-icons';
 
 import color from '../../config/colors.js'
+import dimen from '../../config/dimens.js'
 
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 import ButtonAnimated from "./ButtonAnimated"
 
-export default function PlayButton({song}){
+export default function PlayButton({song, absolute}){
 
 
 	const {addSong} = useMusicPlayer()
@@ -14,33 +17,23 @@ export default function PlayButton({song}){
 	const onPress = ()=>{
 		addSong({song})
 	}
-	const source = require('../../../assets/PlayVector.png')
 
 	return(
-		<ButtonAnimated styles={styles} onClick={onPress} source={source}/>
+		<ButtonAnimated styles={styles} onClick={onPress} absolute={absolute}>
+			<Ionicons name="ios-play-circle" size={dimen.iconsMedium} color={color.mainColor} />
+		</ButtonAnimated>
 	)
 }
 
 const styles = StyleSheet.create({
 	button:{
-		width: 44,
-		height: 44,
-		borderRadius: 44,
-		backgroundColor: color.pastelRed,
-		display: 'flex',
+		margin: 5,
 		justifyContent: 'center',
 		alignItems: 'center'
-	},
-	container:{
-		padding: 15,
 	},
 	touchable:{
 		position: 'absolute',
 		bottom: 0,
 		right: 0,
-	},
-	image:{
-		width: '70%',
-		height: '70%'
 	}
 })
