@@ -26,7 +26,7 @@ export default function usePermissions(){
             return granted === PermissionsAndroid.RESULTS.GRANTED || granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ? true : false
         }
         catch (err){
-            console.log(err)
+            console.log(`Error al obtener WriteStoragePermission: \n${err} `)
             return false
         }
     }
@@ -50,7 +50,7 @@ export default function usePermissions(){
             return granted === PermissionsAndroid.RESULTS.GRANTED ? true : false
         }
         catch (err){
-            console.log(err)
+            console.log(`Error al obtener NotificationPermission: \n${err} `)
             return false
         }
     }
