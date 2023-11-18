@@ -3,12 +3,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, ActivityIndicator, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import TrackPlayer, { Capability } from 'react-native-track-player';
-
+import * as SplashScreen from 'expo-splash-screen';
 import {setupPlayer} from './src/services'
 
 import {ConverterProvider} from './src/context/ConverterContext'
 import {ReproductorProvider} from './src/context/ReproductorContext'
 import { SearchStack } from './src/Navigation/Stack/ConverterStack'
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
@@ -20,7 +22,6 @@ export default function App() {
       setIsPlayerReady(isSetup);
       !isSetup && setup()
     }
-    console.log("Por aqui va")
     setup();
   }, []);
 
