@@ -25,8 +25,8 @@ export default function MusicPlayerScreen({navigation}){
 			<View style={stylesComponents}>
 				<ImageBackground source={{uri: track.artwork}} blurRadius={10} style={styles.background}/>
 				<View style={styles.topBar}>
-					<Pressable onPress={onPress}><Entypo name="chevron-small-down" size={dimens.iconsSmall} color={colors.textColor} /></Pressable>
-					<SimpleLineIcons name="options-vertical" size={dimens.iconsSmall} color={colors.textColor} />
+					<Pressable onPress={onPress} style={styles.button}><Entypo name="chevron-small-down" size={dimens.iconsSmall} color={colors.textColor} /></Pressable>
+					<SimpleLineIcons name="options-vertical" size={20} color={colors.textColor} />
 				</View>
 				<TrackPlayerInfo/>
 				<MusicController/>
@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		justifyContent: 'space-between',
 		alignItems: "center"
+	},
+	button:{
+		padding: 7,
 	},
 	topBar:{
 		width: "100%",
