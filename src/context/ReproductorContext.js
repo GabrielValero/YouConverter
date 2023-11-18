@@ -5,26 +5,11 @@ import downloadSource from '../utils/downloadSource'
 
 const ReproductorContext = React.createContext('')
 
-async function setup() { // inicializa el track player
-  await TrackPlayer.setupPlayer()
-  await TrackPlayer.updateOptions({
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  })
-  
-}
-
 export function ReproductorProvider({children}){
 
 	const [trackList, setTrackList] = useState([]) // La lista de reproduccion
 	const [track, setTrack] = useState(null) // El track que se esta reproduciendo
+	const [songIndex, setSongIndex] = useState(-1)
 	const [playState, setPlayState] = useState("paused") // Es true si se esta reproduciendo algo
 
 	const playbackState  = usePlaybackState()
@@ -67,26 +52,28 @@ export function ReproductorProvider({children}){
 			})
 	}
 
-	useEffect(()=>{
-		(async ()=>{ // si no esta inicializado track player mostrara un error y luego se inicializara, al menos es la idea
-			try{
-				const getCurrentQueue = await TrackPlayer.getQueue()
-				setTrackList(getCurrentQueue)
-				let trackIndex = await TrackPlayer.getCurrentTrack();
-				let trackObject = await TrackPlayer.getTrack(trackIndex);
-				setTrack(trackObject)
-			}catch{
-				await setup()
-				await TrackPlayer.reset()
-			}
-		})()
+	// useEffect(()=>{
+	// 	(async ()=>{ // si no esta inicializado track player mostrara un error y luego se inicializara, al menos es la idea
+	// 		await setup()
+			
+	// 		// try{
+	// 		// 	const getCurrentQueue = await TrackPlayer.getQueue()
+	// 		// 	setTrackList(getCurrentQueue)
+	// 		// 	let trackIndex = await TrackPlayer.getCurrentTrack();
+	// 		// 	let trackObject = await TrackPlayer.getTrack(trackIndex);
+	// 		// 	setTrack(trackObject)
+	// 		// }catch{
+	// 		// 	await setup()
+	// 		// 	await TrackPlayer.reset()
+	// 		// }
+	// 	})()
 		
-	},[])
+	// },[])
 
 
 
 	return(
-		<ReproductorContext.Provider value={{trackList, setTrackList, track, setTrack, playState, setPlayState}}>
+		<ReproductorContext.Provider value={{trackList, setTrackList, track, setTrack, playState, setPlayState, songIndex, setSongIndex}}>
 			{children}
 		</ReproductorContext.Provider>
 		)

@@ -6,6 +6,7 @@ import {useProgress} from 'react-native-track-player';
 import ReproductorContext from '../../context/ReproductorContext'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TextTemplate from '../Templates/TextTemplate'
+import colors from '../../config/colors';
 export default function ProgressBar(){
 	const { position, buffered, duration } = useProgress()
 	const {track} = useContext(ReproductorContext)
@@ -19,7 +20,7 @@ export default function ProgressBar(){
 	return(
 		<View style={styles.container}>
 			<View style={styles.progressBarContainer}>
-				<View style={[styles.bufferBar, styles.progressBar, {width: `${track?.duration ? buffered*100/track.duration : "0"}%`}]}></View>
+				<View style={[styles.bufferBar, styles.progressBar, {width: `${track?.duration ? buffered*100/track.duration : "0"}%`}]}/>
 				<Slider
 					value={position}
 					animateTransitions={true}
@@ -27,10 +28,10 @@ export default function ProgressBar(){
 					maximumValue={track?.duration}
 					trackClickable={true}
 					containerStyle={styles.progressBar}
-					maximumTrackTintColor={"transparent"}
-					minimumTrackTintColor={"#DE5565"}
+					maximumTrackTintColor={"rgba(209, 234, 222, 0.10);"}
+					minimumTrackTintColor={colors.mainColor}
 					minimumTrackStyle={styles.bar}
-					thumbTintColor={"#DE5565"}
+					thumbTintColor={colors.mainColor}
 					onSlidingComplete={seekTo}
 					trackStyle={styles.bar}
 				/>
@@ -87,6 +88,6 @@ const styles = StyleSheet.create({
 		borderRadius: 30,
 	},
 	bufferBar:{
-		backgroundColor: '#BFBFBF'
+		backgroundColor: 'rgba(187, 242, 216, 0.30);'
 	}
 })

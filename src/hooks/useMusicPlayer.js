@@ -5,41 +5,60 @@ import { useNavigation } from '@react-navigation/native';
 import ReproductorContext from '../context/ReproductorContext'
 
 import isNotAdded from '../utils/isNotAdded'
+import downloadSource from '../utils/downloadSource'
+//import { onDisplayNotification } from '../utils/notificationController';
 
 export default function useMusicPlayer(){
 
-	const {trackList, setTrackList, track, setTrack} = useContext(ReproductorContext)
-	const [songIndex, setSongIndex] = useState()
+	const {trackList, setTrackList, track, setTrack, setPlayState, songIndex, setSongIndex } = useContext(ReproductorContext)
 	const navigation = useNavigation();
 
-	const addSong = async ({song})=>{
+	const addSong = async ({song})=>{ // new song added to the trackList
 		console.log("comenzando", song)
-		isNotAdded(trackList, song) ? (
-			setTrackList([...trackList, song]),
-			await TrackPlayer.add([song])
-			) : null
-		const tmp = await TrackPlayer.getQueue()
-		console.log(tmp)
+		isNotAdded(trackList, song) && setTrackList([...trackList, song])
+		trackList.length <= 0 && (
+			setSongIndex(0),
+			changeTrack({song})
+		)
 	}
+	const changeTrack = async ({song})=>{
+		TrackPlayer.pause()
 
-	const playSong = async ()=>{
+		setTrack(song)
+		
+		song.url = await downloadSource(song.videoId)
+		//console.log("Por aqui va menol ", song);
+		
+		await TrackPlayer.reset()
+		await TrackPlayer.add([song])
+		
+		//onDisplayNotification(song)
+
+		await TrackPlayer.play()
+		
+
+
+		setPlayState("playing")
+	}
+	const isPlaying = async ()=>{ // return true if is playing any song
+		const state = await TrackPlayer.getState();
+		return state === State.Playing
+	}
+	const playAndPause = async ()=>{
 		const state = await TrackPlayer.getState();
 		state === State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
-
 	}
 	const playNextSong = async ()=>{
-		await TrackPlayer.skipToNext();
-		let trackIndex = await TrackPlayer.getCurrentTrack();
-		let trackObject = await TrackPlayer.getTrack(trackIndex);
-		console.log(`Title: ${trackObject.title}`);
-		setTrack(trackObject)
+		if(songIndex < trackList.length-1 ){
+			setSongIndex(songIndex+1)
+			changeTrack({song : trackList[songIndex+1]})
+		}
 	}
 	const playPreviewSong = async ()=>{
-		await TrackPlayer.skipToPrevious();
-		let trackIndex = await TrackPlayer.getCurrentTrack();
-		let trackObject = await TrackPlayer.getTrack(trackIndex);
-		setTrack(trackObject)
-		console.log(`Title: ${trackObject.title}`);
+		if(songIndex > 0 ){
+			setSongIndex(songIndex-1)
+			changeTrack({song : trackList[songIndex-1]})
+		}
 	}
 	const seekTo = async (value)=>{
 		await TrackPlayer.seekTo(value[0])
@@ -56,7 +75,7 @@ export default function useMusicPlayer(){
 	}
 	return{
 		addSong,
-		playSong,
+		playAndPause,
 		playNextSong,
 		playPreviewSong,
 		seekTo,

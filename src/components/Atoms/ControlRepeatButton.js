@@ -3,15 +3,19 @@ import {View, Image, Pressable, StyleSheet} from 'react-native'
 import {RepeatMode} from 'react-native-track-player'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import colors from '../../config/colors';
+import dimens from '../../config/dimens';
+
 export default function ControlRepeatButton(){
 	const {setRepeatMode} = useMusicPlayer()
 
 	const [index, setIndex] = useState(0)
 
 	const images = [
-		require('../../../assets/no-repeat.png'),
-		require('../../../assets/repeatAll.png'),
-		require('../../../assets/repeatOne.png')
+		<MaterialCommunityIcons name="repeat-off" size={dimens.iconsSmall} color={colors.buttonColor} />,
+		<MaterialCommunityIcons name="repeat" size={dimens.iconsSmall} color={colors.buttonColor} />,
+		<MaterialCommunityIcons name="repeat-once" size={dimens.iconsSmall} color={colors.buttonColor} />
 	]
 
 	const onPress = ()=>{
@@ -29,7 +33,7 @@ export default function ControlRepeatButton(){
 
 	return(
 		<Pressable onPress={onPress} style={styles.button}>
-			<Image source={images[index]} style={styles.icon}/>
+			{images[index]}
 		</Pressable>
 	)
 }

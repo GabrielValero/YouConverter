@@ -3,7 +3,13 @@
     "version": ">= 0.47.0"
   },
   "build": {
-
+    "dev": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "image": "ubuntu-18.04-jdk-11-ndk-r19c"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",

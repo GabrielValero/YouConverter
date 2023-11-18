@@ -1,9 +1,7 @@
 import React, {useEffect} from 'react'
 import {Image, Pressable, View, StyleSheet, Animated} from 'react-native'
 
-import color from '../../config/colors.js'
-
-export default function ButtonAnimated({styles, onClick, source}){
+export default function ButtonAnimated({styles, onClick, children, absolute}){
 	
 	const rotateAnim = React.useRef(new Animated.Value(0)).current
 
@@ -26,12 +24,10 @@ export default function ButtonAnimated({styles, onClick, source}){
 		onClick()
 	}
 	return(
-		<Pressable onPress={onPress} style={styles.touchable}>
-			<View style={styles.container}>
-				<Animated.View style={[styles.button, {transform: [getRotationAnimation()]}]}>
-					<Image source={source} style={styles.image}/>
-				</Animated.View>	
-			</View>
+		<Pressable onPress={onPress} style={absolute && styles.touchable}>
+			<Animated.View style={[styles.button, {transform: [getRotationAnimation()]}]}>
+				{children}
+			</Animated.View>
 		</Pressable>
 	)
 }
