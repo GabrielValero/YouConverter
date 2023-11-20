@@ -16,41 +16,8 @@ export function ReproductorProvider({children}){
 	const events = [
 	  Event.PlaybackState,
 	  Event.PlaybackError,
-	  Event.PlaybackTrackChanged
+	  Event.PlaybackActiveTrackChanged
 	];
-
-	useTrackPlayerEvents(events, async (e)=>{
-		console.log("event", e)
-		
-		// if(e.state === "idle"){
-		// 	await TrackPlayer.reset()
-		// 	setTrackList([])
-		// 	setTrack(null)
-		// }
-		
-		setPlayState(e.state)
-	});
-
-	const processTracks = async ()=>{
-		console.log("Esta pasando por aqui creo");
-		let songQueue = await TrackPlayer.getQueue()
-		const processingList = trackList.filter(a=> !songQueue.some(b=> b.title === a.title) && a) // obtiene solo los tracks de trackList que no esten en Queue para añadirlos despues
-		processingList.length > 0 && processingList
-			.forEach(async (element, index) => { // Obtiene el link de descarga de las canciones
-				if(!element.url){
-					let songUrl = await downloadSource(element.videoId)
-						.catch(err=>{
-							console.log(err)
-							//"You have exceeded the rate limit per minute for your plan, BASIC, by the API provider"
-						})
-					element.url = songUrl.url
-					setTrack(element)
-					await TrackPlayer.add([element])
-					await TrackPlayer.skip(songQueue.length) // si la track list es mayor a uno entonces salta a la ultima cancion
-					await TrackPlayer.play()
-				}
-			})
-	}
 
 	// useEffect(()=>{
 	// 	(async ()=>{ // si no esta inicializado track player mostrara un error y luego se inicializara, al menos es la idea

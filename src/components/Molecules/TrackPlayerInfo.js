@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 		marginBottom: 30,
 		alignItems: 'center',
 		justifyContent: "center",
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
 	outStrock:{
 		width: '100%',

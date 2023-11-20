@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 21,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	background:{
 		width: 1000,

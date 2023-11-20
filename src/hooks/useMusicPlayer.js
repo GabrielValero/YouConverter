@@ -1,5 +1,5 @@
 import {useState, useContext, useEffect} from 'react'
-import TrackPlayer, { State, usePlaybackState } from 'react-native-track-player';
+import TrackPlayer, { State, usePlaybackState, useTrackPlayerEvents, Event } from 'react-native-track-player';
 import { useNavigation } from '@react-navigation/native';
 
 import ReproductorContext from '../context/ReproductorContext'
@@ -12,6 +12,18 @@ export default function useMusicPlayer(){
 
 	const {trackList, setTrackList, track, setTrack, setPlayState, songIndex, setSongIndex } = useContext(ReproductorContext)
 	const navigation = useNavigation();
+
+	useTrackPlayerEvents(events, async (e)=>{
+		console.log("event", e)
+		
+		// if(e.state === "idle"){
+		// 	await TrackPlayer.reset()
+		// 	setTrackList([])
+		// 	setTrack(null)
+		// }
+		
+		setPlayState(e.state)
+	});
 
 	const addSong = async ({song})=>{ // new song added to the trackList
 		console.log("comenzando", song)
@@ -35,17 +47,14 @@ export default function useMusicPlayer(){
 		//onDisplayNotification(song)
 
 		await TrackPlayer.play()
-		
-
-
 		setPlayState("playing")
 	}
 	const isPlaying = async ()=>{ // return true if is playing any song
-		const state = await TrackPlayer.getState();
+		const state = await TrackPlayer.getPlaybackState();
 		return state === State.Playing
 	}
 	const playAndPause = async ()=>{
-		const state = await TrackPlayer.getState();
+		const state = await TrackPlayer.getPlaybackState();
 		state === State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
 	}
 	const playNextSong = async ()=>{

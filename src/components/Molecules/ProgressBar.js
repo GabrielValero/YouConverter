@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 import {View, StyleSheet} from 'react-native'
 import {Slider} from '@miblanchard/react-native-slider';
 
@@ -8,14 +8,9 @@ import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors';
 export default function ProgressBar(){
-	const { position, buffered, duration } = useProgress()
+	const { position, buffered } = useProgress()
 	const {track} = useContext(ReproductorContext)
 	const {seekTo} = useMusicPlayer()
-
-	// useEffect(()=>{
-	// 	console.log("duration: ", track.duration, " position: ", position, " buffered: ", buffered)
-	// 	console.log("progress: ", position*100/track.duration, "% buffered: ", buffered*100/track.duration)
-	// }, [position, buffered])
 
 	return(
 		<View style={styles.container}>
@@ -28,12 +23,12 @@ export default function ProgressBar(){
 					maximumValue={track?.duration}
 					trackClickable={true}
 					containerStyle={styles.progressBar}
-					maximumTrackTintColor={"rgba(209, 234, 222, 0.10);"}
+					maximumTrackTintColor={"transparent"}
 					minimumTrackTintColor={colors.mainColor}
 					minimumTrackStyle={styles.bar}
-					thumbTintColor={colors.mainColor}
-					onSlidingComplete={seekTo}
+					thumbTintColor={"#fff"}
 					trackStyle={styles.bar}
+					onSlidingComplete={seekTo}
 				/>
 			</View>
 			<View style={styles.timeContainer}>
@@ -47,11 +42,6 @@ export default function ProgressBar(){
 		</View>
 	)
 }
-/*
-		<View style={styles.container}>
-			<View style={[styles.bufferBar, styles.bar, {width: `${buffered*100/track.duration}%`}]}></View>
-			<View style={[styles.bar, styles.progressBar, {width: `${position*100/track.duration}%`}]}></View>
-			*/
 
 const styles = StyleSheet.create({
 	container:{
