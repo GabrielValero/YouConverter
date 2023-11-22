@@ -14,23 +14,13 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   useEffect(() => {
-    async function setup() {
-      let isSetup = await setupPlayer();
-      setIsPlayerReady(isSetup);
-      !isSetup && setup()
-    }
-    setup();
+    setupPlayer();
   }, []);
 
 
-  return !isPlayerReady ? (
-    <SafeAreaView style={styles.containerLoader}>
-      <ActivityIndicator size="large" color="#bbb"/>
-    </SafeAreaView>
-  ) : (
+  return (
     <ConverterProvider>
       <ReproductorProvider>
         <NavigationContainer>

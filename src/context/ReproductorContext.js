@@ -13,11 +13,7 @@ export function ReproductorProvider({children}){
 	const [playState, setPlayState] = useState("paused") // Es true si se esta reproduciendo algo
 
 	const playbackState  = usePlaybackState()
-	const events = [
-	  Event.PlaybackState,
-	  Event.PlaybackError,
-	  Event.PlaybackActiveTrackChanged
-	];
+	
 
 	// useEffect(()=>{
 	// 	(async ()=>{ // si no esta inicializado track player mostrara un error y luego se inicializara, al menos es la idea

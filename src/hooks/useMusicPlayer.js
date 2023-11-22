@@ -13,6 +13,12 @@ export default function useMusicPlayer(){
 	const {trackList, setTrackList, track, setTrack, setPlayState, songIndex, setSongIndex } = useContext(ReproductorContext)
 	const navigation = useNavigation();
 
+	const events = [
+		Event.PlaybackState,
+		Event.PlaybackError,
+		Event.PlaybackActiveTrackChanged
+	  ];
+	  
 	useTrackPlayerEvents(events, async (e)=>{
 		console.log("event", e)
 		
@@ -54,7 +60,7 @@ export default function useMusicPlayer(){
 		return state === State.Playing
 	}
 	const playAndPause = async ()=>{
-		const state = await TrackPlayer.getPlaybackState();
+		const {state} = await TrackPlayer.getPlaybackState();
 		state === State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
 	}
 	const playNextSong = async ()=>{
