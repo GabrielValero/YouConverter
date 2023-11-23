@@ -1,7 +1,5 @@
-import {API_URL} from './config'
-
 export default async function downloadSource(id, count = 0){
-	const url = `${API_URL}/api/video?videoId=${id}`
+	const url = `${process.env.EXPO_PUBLIC_API_URL}/api/video?videoId=${id}`
 	console.log(url);
 
 	return await fetch(url)

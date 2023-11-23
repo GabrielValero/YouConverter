@@ -1,8 +1,7 @@
-import {API_URL} from './config'
 
 export default async function getVideosList(query, count = 0){
 	const searchKey = query.trim().replace(/ /g, '+')
-	const url = `${API_URL}/api/search?key=${searchKey}`
+	const url = `${process.env.EXPO_PUBLIC_API_URL}/api/search?key=${searchKey}`
 	console.log(searchKey);
 	
 	return await fetch(url,{
