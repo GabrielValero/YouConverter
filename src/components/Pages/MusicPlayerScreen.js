@@ -1,25 +1,26 @@
 import React, { useContext } from 'react'
+import TrackPlayer, { useActiveTrack } from 'react-native-track-player';
 
 import Container from '../Templates/Container'
 import MusicController from '../Organisms/MusicController'
 import TrackPlayerInfo from '../Molecules/TrackPlayerInfo'
 import { ImageBackground, StyleSheet, View, useWindowDimensions, Pressable } from 'react-native'
-import ImageTemplate from '../Templates/ImageTemplate'
 
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
 import dimens from '../../config/dimens'
 import colors from '../../config/colors'
-import ReproductorContext from '../../context/ReproductorContext'
+import ReproductorContext from '../../context/ReproductorContext';
+
 
 export default function MusicPlayerScreen({navigation}){
-	const {height, width} = useWindowDimensions();
-	const {track} = useContext(ReproductorContext)
+	const {height} = useWindowDimensions();
 	const stylesComponents = [styles.container, {height: height}]
+	const {track} = useContext(ReproductorContext)
 	
 	const onPress= ()=> navigation.goBack()
-	
+
 	return(
 		<Container>
 			<View style={stylesComponents}>

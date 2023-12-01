@@ -9,11 +9,11 @@ import colors from '../../config/colors.js'
 import dimens from '../../config/dimens.js'
 
 export default function ControlPreviousButton({big}){
-	const {playPreviewSong} = useMusicPlayer()
+	const {playPreviousSong} = useMusicPlayer()
 
 
 	return(
-		<Pressable onPress={playPreviewSong}>
+		<Pressable onPress={playPreviousSong}>
 			<Ionicons name="play-skip-back-outline" size={dimens.iconsSmall} color={colors.textColor}/>
 		</Pressable>
 		)

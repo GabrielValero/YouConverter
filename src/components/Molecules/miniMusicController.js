@@ -1,23 +1,23 @@
 import React, {useContext} from 'react'
 import {View, StyleSheet, Image, Pressable} from 'react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 import ReproductorContext from '../../context/ReproductorContext'
+import colors from '../../config/colors'
+
 import ImageTemplate from '../Templates/ImageTemplate'
 import TextTemplate from '../Templates/TextTemplate'
 
 import ControlNextButton from '../Atoms/ControlNextButton'
 import ControlPlayButton from '../Atoms/ControlPlayButton'
-import ControlPreviousButton from '../Atoms/ControlPreviousButton'
 
-import colors from '../../config/colors'
 
 export default function MiniMusicController(){
+	const navigation = useNavigation()
+	const {track} = useContext(ReproductorContext)
 
-	const {trackList, track} = useContext(ReproductorContext)
-	const navigation = useNavigation();
 	const moveTo = () => track && navigation.navigate('MusicPlayerStack')
-
+	
 	return track ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>

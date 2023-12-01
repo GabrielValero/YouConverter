@@ -7,11 +7,14 @@ import ReproductorContext from '../../context/ReproductorContext'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors';
+
 export default function ProgressBar(){
 	const { position, buffered } = useProgress()
-	const {track} = useContext(ReproductorContext)
 	const {seekTo} = useMusicPlayer()
+	const {track} = useContext(ReproductorContext)
 
+	const trackPosition = position ? `${parseInt(position/60) < 10 ? "0" : ""}${parseInt(position/60)}:${parseInt(position%60) < 10 ? "0" : ""}${parseInt(position%60)}` : "00:00"
+	const trackDuration = track.duration ? `${parseInt(track.duration/60) < 10 ? "0" : ""}${parseInt(track.duration/60)}:${parseInt(track.duration%60) < 10 ? "0" : ""}${parseInt(track.duration%60)}` : "0:00"
 	return(
 		<View style={styles.container}>
 			<View style={styles.progressBarContainer}>
@@ -21,22 +24,22 @@ export default function ProgressBar(){
 					animateTransitions={true}
 					minimumValue={0}
 					maximumValue={track?.duration}
-					trackClickable={true}
+					currentTrackClickable={true}
 					containerStyle={styles.progressBar}
 					maximumTrackTintColor={"transparent"}
 					minimumTrackTintColor={colors.mainColor}
 					minimumTrackStyle={styles.bar}
 					thumbTintColor={"#fff"}
-					trackStyle={styles.bar}
+					currentTrackStyle={styles.bar}
 					onSlidingComplete={seekTo}
 				/>
 			</View>
 			<View style={styles.timeContainer}>
 				<TextTemplate small bold>
-					{position ? `${parseInt(position/60)}:${parseInt(position%60)}` : "0:00"}
+					{trackPosition}
 				</TextTemplate>
 				<TextTemplate small bold>
-					{track?.duration ? `${parseInt(track.duration/60)}:${parseInt(track.duration%60)}` : "0:00"}
+					{trackDuration}
 				</TextTemplate>
 			</View>
 		</View>
