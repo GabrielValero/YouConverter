@@ -19,15 +19,21 @@ export default function MusicPlayerScreen({navigation}){
 	const stylesComponents = [styles.container, {height: height}]
 	const {track} = useContext(ReproductorContext)
 	
-	const onPress= ()=> navigation.goBack()
-
-	return(
+	const goBack= ()=> navigation.goBack()
+	const goModal= ()=> navigation.navigate("MusicOptionsModal")
+	if(!track){
+		navigation.navigate("SearchStack")
+	}else return (
 		<Container>
 			<View style={stylesComponents}>
 				<ImageBackground source={{uri: track.artwork}} blurRadius={10} style={styles.background}/>
 				<View style={styles.topBar}>
-					<Pressable onPress={onPress} style={styles.button}><Entypo name="chevron-small-down" size={dimens.iconsSmall} color={colors.textColor} /></Pressable>
-					<SimpleLineIcons name="options-vertical" size={20} color={colors.textColor} />
+					<Pressable onPress={goBack} style={styles.button}>
+						<Entypo name="chevron-small-down" size={dimens.iconsSmall} color={colors.textColor} />
+					</Pressable>
+					<Pressable onPress={goModal} >
+						<SimpleLineIcons name="options-vertical" size={20} color={colors.textColor} />
+					</Pressable>
 				</View>
 				<TrackPlayerInfo/>
 				<MusicController/>

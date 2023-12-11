@@ -5,12 +5,12 @@ import MusicOptionsModal from '../Organisms/MusicOptionsModal'
 
 
 export default function MusicOptionsModalScreen({navigation }){
-	return(
+	return (
 		<View style={styles.modal}>
 			<Pressable onPress={()=> navigation.goBack()} style={styles.transparent}></Pressable>
 			<MusicOptionsModal/>
 		</View>
-		)
+	)
 }
 
 const styles = StyleSheet.create({

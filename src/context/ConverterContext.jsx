@@ -14,8 +14,8 @@ export function ConverterProvider({children}){
   }
   
   return(
-    <Converter.Provider value={{youtubeVideosList, setYoutubeVideosList, downloadInfo, setDownloadInfo, restartInfo, converterMessages, 
-      setConverterMessages}}>
+    <Converter.Provider value={{youtubeVideosList, setYoutubeVideosList, downloadInfo, setDownloadInfo, restartInfo, 
+      converterMessages, setConverterMessages}}>
       {children}
     </Converter.Provider>
   )

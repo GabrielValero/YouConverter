@@ -8,7 +8,7 @@ import isNotAdded from '../utils/isNotAdded'
 import downloadSource from '../utils/downloadSource'
 
 export default function useMusicPlayer(){
-
+	const navigation = useNavigation()
 	const {setPlayState, setTrack } = useContext(ReproductorContext)
 
 	const events = [
@@ -58,8 +58,15 @@ export default function useMusicPlayer(){
 		const repeatMode = await TrackPlayer.getRepeatMode()
 		console.log(repeatMode)
 	}
+	const removeSong = async(trackIndex)=>{
+		const trackElements = (await TrackPlayer.getQueue()).length
+		if(trackElements > 1) await TrackPlayer.remove([trackIndex])
+		else resetPlayList()
+	}
 	const resetPlayList = async()=>{
 		await TrackPlayer.reset()
+		setTrack(null)
+		
 	}
 	return{
 		addSong,
@@ -70,6 +77,7 @@ export default function useMusicPlayer(){
 		setRepeatMode,
 		resetPlayList,
 		getQueue,
+		removeSong
 	}
 
 }

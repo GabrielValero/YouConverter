@@ -20,7 +20,7 @@ export function SearchStack(){
 		    		<RootStack.Screen name="MusicPlayerStack" component={MusicPlayerScreen}  options={{headerShown:false}} />
 		    	</RootStack.Group>
 		    	<RootStack.Group screenOptions={{ presentation: 'transparentModal' }}>
-		    		<RootStack.Screen name="MusicOptions" component={MusicOptionsModalScreen}  options={{headerShown:false}} />
+		    		<RootStack.Screen name="MusicOptionsModal" component={MusicOptionsModalScreen}  options={{headerShown:false}} />
 		    	</RootStack.Group>
 		    </RootStack.Navigator>
 		</>
