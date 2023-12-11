@@ -11,7 +11,7 @@ export default function ConverterScreen(){
 
 	return(
 		<Container>
-			<View style={{margin: 21, flex:1}}>
+			<View style={{marginHorizontal: 21,  marginTop: 21, flex:1}}>
 				<SearchBar/>
 				<VideosList/>
 			</View>
