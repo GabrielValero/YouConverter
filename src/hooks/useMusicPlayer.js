@@ -18,9 +18,14 @@ export default function useMusicPlayer(){
 	];
 
 	useTrackPlayerEvents(events, async (e)=>{
-		setPlayState(e.state)
-		if(e.track){
+		if(e.type == "playback-active-track-changed"){
+			
 			setTrack(e.track)
+			console.info("track", e);
+		}else if(e.type == "playback-state"){
+			setPlayState(e.state)
+			if(e.state == State.None) resetPlayList()
+			if(e.state == State.Error) await TrackPlayer.play()
 		}
 	});
 
