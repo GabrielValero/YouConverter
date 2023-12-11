@@ -1,19 +1,17 @@
-import React, {useContext} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
-
-import ConverterContext from '../../context/ConverterContext'
+import React from 'react'
+import {View, StyleSheet} from 'react-native'
 
 import Container from '../Templates/Container'
 import SearchBar from '../Molecules/SearchBar'
-
 import VideosList from '../Organisms/VideosList'
 import MiniMusicController from '../Molecules/miniMusicController'
+
 
 export default function ConverterScreen(){
 
 	return(
 		<Container>
-			<View style={{margin: 21, flex:1}}>
+			<View style={{marginHorizontal: 21,  marginTop: 21, flex:1}}>
 				<SearchBar/>
 				<VideosList/>
 			</View>
@@ -21,3 +19,14 @@ export default function ConverterScreen(){
 		</Container>
 	)
 }
+
+const styles = StyleSheet.create({
+	container:{
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		marginBottom: 29
+	},
+	text:{
+		marginBottom: 14
+	}
+})

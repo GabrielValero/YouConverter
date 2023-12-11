@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-
+import * as SplashScreen from 'expo-splash-screen';
 import ConverterContext from '../context/ConverterContext'
 
 
@@ -11,8 +11,13 @@ export default function useYoutube(){
 	
 	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
 
+	const init = async ()=>{
+		await searchByKey({key: "jt music"})
+		await SplashScreen.hideAsync();
+	}
+
 	useEffect(()=>{
-		searchByKey({key: "jt music"})
+		init()
 	}, [])
 
 	const getQueryResult = ({search})=>{

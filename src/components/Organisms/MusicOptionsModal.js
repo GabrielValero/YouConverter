@@ -1,32 +1,44 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View, StyleSheet, Pressable} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
-import { Ionicons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import { MaterialCommunityIcons, MaterialIcons, Ionicons  } from '@expo/vector-icons';
 
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
-export default function MusicoptionsModal(){
-	const {resetPlayList} = useMusicPlayer()
+import TrackPlayer from 'react-native-track-player';
+import ReproductorContext from '../../context/ReproductorContext';
+export default function MusicOptionsModal(){
+	const {setTrack} = useContext(ReproductorContext)
+	const {resetPlayList, removeSong} = useMusicPlayer()
 	const navigation = useNavigation();
 
-	const reset = ()=>{
+	const onReset = ()=>{
 		resetPlayList()
 		navigation.popToTop()
 	}
+	const onRemove = async()=>{
+	    const index = await TrackPlayer.getActiveTrackIndex()
+		removeSong(index)
+	}
+
 	return(
-			<View style={styles.container}>
-				<View style={styles.title}>
-					<TextTemplate title style={{marginLeft: 10}}>Opciones adicionales</TextTemplate>
-				</View>
-				<Pressable onPress={reset} style={styles.option}>
-					<MaterialCommunityIcons name="playlist-remove" size={24} color="white" />
-					<TextTemplate bold style={{marginLeft: 10}}>Eliminar lista de Reproducción</TextTemplate>
-				</Pressable>
-			</View>
-		)
+        <View style={styles.container}>
+            <View style={styles.title}>
+                <TextTemplate title style={{marginLeft: 10}}>Opciones adicionales</TextTemplate>
+            </View>
+            <Pressable onPress={onReset} style={styles.option}>
+                <MaterialCommunityIcons name="playlist-remove" size={24} color={`${colors.textColor}70`} />
+                <TextTemplate style={{marginLeft: 10}}>Eliminar lista de Reproducción</TextTemplate>
+            </Pressable>
+            <Pressable onPress={onRemove} style={styles.option}>
+				<MaterialIcons name="remove-circle-outline" size={24} color={`${colors.textColor}70`} />
+                <TextTemplate style={{marginLeft: 10}}>Remover canción de la lista</TextTemplate>
+            </Pressable>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({

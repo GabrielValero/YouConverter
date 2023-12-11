@@ -1,16 +1,17 @@
-import {API_URL} from './config'
+export default async function downloadSource(id, count = 0){
+	const url = `${process.env.EXPO_PUBLIC_API_URL}/api/video?videoId=${id}`
+	console.log(url);
 
-export async function downloadSource(id){
-	const url = `${API_URL}/api/video?videoId=${id}`
-
-	return await fetch(url,{
-		method: "GET",
-		mode: 'cors',
-	})
+	return await fetch(url)
 	.then(response=>response.json())
 	.then(res=>{
-		console.log(res);
-	})
 	
-
+		return res.url
+	
+	}).catch(err=>{
+	
+		console.log("Hubo un error menol por el id ", err.message);
+		if(count < 3) return downloadSource(id, count + 1)
+	
+	})
 }
