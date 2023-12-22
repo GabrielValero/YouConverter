@@ -4,7 +4,7 @@ import {Platform, PermissionsAndroid, Alert, LogBox} from 'react-native'
 export default function usePermissions(){
 
     useEffect(()=>{
-        NotificationPermission()
+        //NotificationPermission()
     }, [])
 
     const WriteStoragePermission = async () => {

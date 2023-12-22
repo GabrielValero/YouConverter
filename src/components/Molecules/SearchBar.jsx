@@ -5,7 +5,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 
 import TextTemplate from '../Templates/TextTemplate'
 import ConverterContext from '../../context/ConverterContext'
-import useYoutube from '../../hooks/useYoutube.jsx'
+import useYoutube from '../../hooks/useYoutube.js'
 import colors from '../../config/colors'
 
 export default function SearchBar(){
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   container:{
     width: "100%",
     padding: 10,
+    marginBottom: 15,
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',

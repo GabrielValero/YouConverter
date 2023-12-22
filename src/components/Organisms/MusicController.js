@@ -6,9 +6,9 @@ import ProgressBar from '../Molecules/ProgressBar'
 import TextTemplate from '../Templates/TextTemplate'
 import ReproductorContext from '../../context/ReproductorContext'
 
-
 export default function MusicController(){
 	const {track} = useContext(ReproductorContext)
+	
 	return(
 		<View style={styles.container}>
 			<TextTemplate textSemiBig bold noWrap numberOfLines={2} style={styles.text}>{track.title}</TextTemplate>

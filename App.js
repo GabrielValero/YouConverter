@@ -3,33 +3,24 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, ActivityIndicator, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native'
 import TrackPlayer, { Capability } from 'react-native-track-player';
-
+import * as SplashScreen from 'expo-splash-screen';
 import {setupPlayer} from './src/services'
 
 import {ConverterProvider} from './src/context/ConverterContext'
 import {ReproductorProvider} from './src/context/ReproductorContext'
 import { SearchStack } from './src/Navigation/Stack/ConverterStack'
 
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
 
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
   useEffect(() => {
-    async function setup() {
-      let isSetup = await setupPlayer();
-      setIsPlayerReady(isSetup);
-      !isSetup && setup()
-    }
-    console.log("Por aqui va")
-    setup();
+    setupPlayer();
   }, []);
 
 
-  return !isPlayerReady ? (
-    <SafeAreaView style={styles.containerLoader}>
-      <ActivityIndicator size="large" color="#bbb"/>
-    </SafeAreaView>
-  ) : (
+  return (
     <ConverterProvider>
       <ReproductorProvider>
         <NavigationContainer>

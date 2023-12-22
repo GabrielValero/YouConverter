@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useContext} from 'react'
 import {View, StyleSheet} from 'react-native'
 import {Slider} from '@miblanchard/react-native-slider';
 
@@ -7,16 +7,14 @@ import ReproductorContext from '../../context/ReproductorContext'
 import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors';
+
 export default function ProgressBar(){
-	const { position, buffered, duration } = useProgress()
-	const {track} = useContext(ReproductorContext)
+	const { position, buffered } = useProgress()
 	const {seekTo} = useMusicPlayer()
+	const {track} = useContext(ReproductorContext)
 
-	// useEffect(()=>{
-	// 	console.log("duration: ", track.duration, " position: ", position, " buffered: ", buffered)
-	// 	console.log("progress: ", position*100/track.duration, "% buffered: ", buffered*100/track.duration)
-	// }, [position, buffered])
-
+	const trackPosition = position ? `${parseInt(position/60) < 10 ? "0" : ""}${parseInt(position/60)}:${parseInt(position%60) < 10 ? "0" : ""}${parseInt(position%60)}` : "00:00"
+	const trackDuration = track.duration ? `${parseInt(track.duration/60) < 10 ? "0" : ""}${parseInt(track.duration/60)}:${parseInt(track.duration%60) < 10 ? "0" : ""}${parseInt(track.duration%60)}` : "0:00"
 	return(
 		<View style={styles.container}>
 			<View style={styles.progressBarContainer}>
@@ -26,32 +24,27 @@ export default function ProgressBar(){
 					animateTransitions={true}
 					minimumValue={0}
 					maximumValue={track?.duration}
-					trackClickable={true}
+					currentTrackClickable={true}
 					containerStyle={styles.progressBar}
-					maximumTrackTintColor={"rgba(209, 234, 222, 0.10);"}
+					maximumTrackTintColor={"transparent"}
 					minimumTrackTintColor={colors.mainColor}
 					minimumTrackStyle={styles.bar}
-					thumbTintColor={colors.mainColor}
+					thumbTintColor={"#fff"}
+					currentTrackStyle={styles.bar}
 					onSlidingComplete={seekTo}
-					trackStyle={styles.bar}
 				/>
 			</View>
 			<View style={styles.timeContainer}>
 				<TextTemplate small bold>
-					{position ? `${parseInt(position/60)}:${parseInt(position%60)}` : "0:00"}
+					{trackPosition}
 				</TextTemplate>
 				<TextTemplate small bold>
-					{track?.duration ? `${parseInt(track.duration/60)}:${parseInt(track.duration%60)}` : "0:00"}
+					{trackDuration}
 				</TextTemplate>
 			</View>
 		</View>
 	)
 }
-/*
-		<View style={styles.container}>
-			<View style={[styles.bufferBar, styles.bar, {width: `${buffered*100/track.duration}%`}]}></View>
-			<View style={[styles.bar, styles.progressBar, {width: `${position*100/track.duration}%`}]}></View>
-			*/
 
 const styles = StyleSheet.create({
 	container:{

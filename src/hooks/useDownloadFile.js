@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {Platform, Alert} from 'react-native'
 import RNFetchBlob from "rn-fetch-blob";
-import TrackPlayer from 'react-native-track-player';
 import usePermissions from './usePermissions';
 import downloadSource from '../utils/downloadSource';
 

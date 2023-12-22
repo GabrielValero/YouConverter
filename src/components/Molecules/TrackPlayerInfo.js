@@ -1,17 +1,17 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import {View, StyleSheet, useWindowDimensions} from 'react-native'
-import { useNavigation } from '@react-navigation/native';
 
 import ImageTemplate from '../Templates/ImageTemplate'
-import ReproductorContext from '../../context/ReproductorContext'
+
 
 import colors from '../../config/colors';
+import useMusicPlayer from '../../hooks/useMusicPlayer';
+import ReproductorContext from '../../context/ReproductorContext';
 
 export default function TrackPlayerInfo(){
-	
-	const {track} = useContext(ReproductorContext)
+
 	const {width} = useWindowDimensions();
-	//
+	const {track} = useContext(ReproductorContext)
 
 	const styleComponent = [styles.imageContainer, {width: width*0.8, height: width*0.8 }]
 	return(
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 		marginBottom: 30,
 		alignItems: 'center',
 		justifyContent: "center",
-		flexDirection: 'row'
+		flexDirection: 'row',
 	},
 	outStrock:{
 		width: '100%',
