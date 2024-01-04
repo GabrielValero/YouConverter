@@ -1,4 +1,4 @@
-package com.gabrielvalero.YouConverter.dev;
+package com.gabrielvalero.YouConverter;
 
 import android.os.Build;
 import android.os.Bundle;
