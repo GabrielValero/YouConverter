@@ -91,22 +91,6 @@ android {
 
         buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
     }
-
-    flavorDimensions "env"
-    productFlavors {
-        dev {
-            dimension "env"
-            applicationId 'com.gabrielvalero.YouConverter.dev'
-            versionNameSuffix "-dev"
-            buildConfigField "String", "APP_ENV", "\"dev\""
-        }
-        prod {
-            dimension "env"
-            applicationId 'com.gabrielvalero.YouConverter'
-            buildConfigField "String", "APP_ENV", "\"production\""
-        }
-    }
-
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -126,6 +110,18 @@ android {
             shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            applicationId 'com.gabrielvalero.YouConverter.Dev'
+
+        }
+        prod {
+            dimension "version"
+            applicationId 'com.gabrielvalero.YouConverter'
         }
     }
 }

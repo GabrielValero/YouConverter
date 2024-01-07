@@ -3,17 +3,37 @@
     "version": ">= 0.47.0"
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "env": {
-        "APP_VARIANT": "development"
+    "production": {
+      "android": {
+        "buildType": "apk"
       },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
+        "EXPO_PUBLIC_APP_VARIANT": "production"
+      }
+    }, 
+    
+    "preview":{
+      "developmentClient": false,
       "distribution": "internal",
       "android": {
-        "buildType": "apk",
-        "gradleCommand": ":app:assembleDevDebug"
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
+        "EXPO_PUBLIC_APP_VARIANT": "production"
+      }
+    },
+
+    "development": {
+      "extends": "preview",
+      "developmentClient": true,
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       }
     }
+
+    
   },
   "submit": {
     "production": {}
