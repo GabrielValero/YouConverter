@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import TrackPlayer,{ usePlaybackState, Capability, RepeatMode, useTrackPlayerEvents, Event, useActiveTrack } from 'react-native-track-player';
 
-import downloadSource from '../utils/downloadSource'
+import getUrlSong from '../utils/getUrlSong'
 
 const ReproductorContext = React.createContext('')
 

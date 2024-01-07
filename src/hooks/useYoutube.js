@@ -4,7 +4,7 @@ import ConverterContext from '../context/ConverterContext'
 
 
 import getVideosList from '../utils/getVideosList'
-import downloadSource from '../utils/downloadSource'
+import getUrlSong from '../utils/getUrlSong'
 
 
 export default function useYoutube(){
@@ -12,7 +12,7 @@ export default function useYoutube(){
 	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
 
 	const init = async ()=>{
-		await searchByKey({key: "jt music"})
+		await getByKey({key: "jt music"})
 		await SplashScreen.hideAsync();
 	}
 
@@ -28,23 +28,23 @@ export default function useYoutube(){
 			if(search.includes('youtu.be/')) temp = search.slice(search.indexOf('.be/')+4); // If url is mobile version.
 			else if(search.includes('youtube.com/watch?v=') && search.includes('&')) temp = search.slice(search.indexOf('v=')+2, search.indexOf('&')); // If url is web version and include &.
 			else temp = search.slice(search.indexOf('v=')+2); // if url is web version and don´t include &
-			searchVideoById({id: temp})
+			getVideoById({id: temp})
 
 		}else{
-			searchByKey({key: search})
+			getByKey({key: search})
 		}
 	}
 
-	const searchVideoById = async ({id})=>{
+	const getVideoById = async ({id})=>{
 		try{
-			const downloadUrl = await downloadSource({id: id})
+			const downloadUrl = await getUrlSong({id: id})
 			setDownloadInfo(downloadUrl)
 		}catch(err){
 			throw new Error(`Fallo al obtener el link de descarga. error: ${err.message}`)
 		}
 	}
 
-	const searchByKey = async ({key})=>{
+	const getByKey = async ({key})=>{
 		try{
 			const result = await getVideosList(key)
 			console.log(result);

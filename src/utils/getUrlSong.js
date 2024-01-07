@@ -1,4 +1,4 @@
-export default async function downloadSource(id, count = 0){
+export default async function getUrlSong(id, count = 0){
 	const url = `${process.env.EXPO_PUBLIC_API_URL}/api/video?videoId=${id}`
 	console.log(url);
 
@@ -11,7 +11,7 @@ export default async function downloadSource(id, count = 0){
 	}).catch(err=>{
 	
 		console.log("Hubo un error menol por el id ", err.message);
-		if(count < 3) return downloadSource(id, count + 1)
+		if(count < 3) return getUrlSong(id, count + 1)
 	
 	})
 }
