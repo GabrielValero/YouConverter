@@ -14,10 +14,9 @@
     }, 
     
     "preview":{
-      "developmentClient": false,
-      "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleProdRelease"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
@@ -28,6 +27,10 @@
     "development": {
       "extends": "preview",
       "developmentClient": true,
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDevDebug"
+      },
       "env": {
         "EXPO_PUBLIC_APP_VARIANT": "development"
       }
