@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 import {Platform, Alert} from 'react-native'
 import RNFetchBlob from "rn-fetch-blob";
 import usePermissions from './usePermissions';
-import downloadSource from '../utils/downloadSource';
+import getUrlSong from '../utils/getUrlSong';
 
 export default function useDownLoadFile(){
   
@@ -12,7 +12,7 @@ export default function useDownLoadFile(){
 		const permission = await WriteStoragePermission()
 
 		console.log("use ",item);
-		item.url = await downloadSource(item.videoId)
+		item.url = await getUrlSong(item.videoId)
 
 
 		permission ? RNFetchBlob.config({
@@ -33,22 +33,12 @@ export default function useDownLoadFile(){
         .then((res) => {
 			// the temp file path
 			console.log("The file saved to ", res.path());
+			showToast("Descarga exitosa")
         })
         .catch((errorMessage, statusCode) => {
             console.log("errorMessage", errorMessage)
             console.log("statusCode", statusCode)
-            Alert.alert(
-                "Hubo un error!!!",
-                "Puede ser por falta de internet quien sabe",
-                [
-                    {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                    },
-                    { text: "Try again", onPress: () =>  downloadMedia}
-                ]
-            )
+            showToast("Error en la descarga")
 		})
 		: Alert.alert(
 			"FALTAN PERMISOS!!!",

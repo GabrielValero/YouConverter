@@ -1,11 +1,13 @@
 import {useState, useContext, useEffect} from 'react'
+
 import TrackPlayer, { State, usePlaybackState, useTrackPlayerEvents, Event, useActiveTrack } from 'react-native-track-player';
 import { useNavigation } from '@react-navigation/native';
 
 import ReproductorContext from '../context/ReproductorContext'
 
 import isNotAdded from '../utils/isNotAdded'
-import downloadSource from '../utils/downloadSource'
+import getUrlSong from '../utils/getUrlSong'
+import showToast from '../utils/showToast';
 
 export default function useMusicPlayer(){
 	const navigation = useNavigation()
@@ -32,10 +34,11 @@ export default function useMusicPlayer(){
 	const addSong = async ({song})=>{ // new song added to the trackList
 		const trackList = await TrackPlayer.getQueue()
 		if(isNotAdded(trackList, song)){
-			song.url = await downloadSource(song.videoId) // get youtube video url converted to mp3
+			song.url = await getUrlSong(song.videoId) // get youtube video url converted to mp3
 			
 			await TrackPlayer.add([song]) // valid if song is added, if true then add song to queue.
 		}
+		showToast("Se añadió")
 	}
 	const getQueue = async ()=>{
 		await TrackPlayer.getQueue()
@@ -65,13 +68,17 @@ export default function useMusicPlayer(){
 	}
 	const removeSong = async(trackIndex)=>{
 		const trackElements = (await TrackPlayer.getQueue()).length
-		if(trackElements > 1) await TrackPlayer.remove([trackIndex])
-		else resetPlayList()
+		if(trackElements > 1){
+			
+			await TrackPlayer.remove([trackIndex])
+			showToast("Se eliminó")
+
+		} else resetPlayList()
 	}
 	const resetPlayList = async()=>{
 		await TrackPlayer.reset()
 		setTrack(null)
-		
+		showToast("Lista vacía")
 	}
 	return{
 		addSong,
