@@ -1,13 +1,14 @@
 {
   "name": "youconverter",
   "version": "1.0.0",
-  "main": "./index.js",
+  "main": "./index.tsx",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "npx expo run:android --variant devDebug",
     "build:prev": "npx eas build -p android --profile preview",
     "build:dev": "npx eas build -p android --profile development",
     "postinstall": "npx jetify",
+    "ts:check": "tsc",
     "eject": "expo eject"
   },
   "dependencies": {
@@ -39,7 +40,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.3",
-    "jetifier": "^2.0.0"
+    "@types/expo": "^33.0.1",
+    "@types/expo__vector-icons": "^10.0.0",
+    "@types/react": "^18.2.47",
+    "@types/react-native": "^0.73.0",
+    "jetifier": "^2.0.0",
+    "typescript": "^5.3.3"
   },
   "private": true
 }
