@@ -9,6 +9,7 @@ import PlayButton from '../Atoms/PlayButton';
 
 import DownloadButton from '../Atoms/DownloadButton';
 import { TrackData } from '../../types';
+import formatTime from '../../utils/formatTime';
 
 type Prop = {
     item: TrackData
@@ -17,13 +18,15 @@ export default function ListCard({item}: Prop){
     
     const title = item.title
     const artist = item.artist
+    const duration = item.duration
     return item && (
-        <View style={[styles.container, {maxWidth: "100%", marginVertical:20}]}>
+        <View style={[styles.container, {maxWidth: "100%", marginVertical:15}]}>
             <View style={styles.containerImage}>
                 <ImageTemplate url={item.artwork} style={styles.image} cover coverWidth coverHeight/>
             </View>
             <View style={styles.containerText}>
                 <TextTemplate textMedium noWrap numberOfLines={2}>{title}</TextTemplate>
+                <TextTemplate textSmall noWrap>{`Duración: ${formatTime(duration)}`}</TextTemplate>
                 <TextTemplate textSmall noWrap>{artist}</TextTemplate>
             </View>
             <View style={[styles.container]}>
