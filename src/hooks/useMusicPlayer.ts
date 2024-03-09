@@ -50,8 +50,7 @@ export default function useMusicPlayer(){
 		return state.state === State.Playing
 	}
 	const playAndPause = async ()=>{
-		const {state} = await TrackPlayer.getPlaybackState();
-		state === State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
+		await isPlaying() ? TrackPlayer.pause() : TrackPlayer.play()
 	}
 	const playNextSong = async ()=>{
 		await TrackPlayer.skipToNext()

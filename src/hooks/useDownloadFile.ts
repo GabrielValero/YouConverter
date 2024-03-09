@@ -13,7 +13,7 @@ export default function useDownLoadFile(){
 	const {WriteStoragePermission} = usePermissions()
 
 	const downloadTrack = async (item: TrackData)=>{
-		const permission = await WriteStoragePermission()
+		const requestPermission = await WriteStoragePermission()
 
 		item.url = await getUrlSong(item.videoId!)
 
@@ -30,7 +30,10 @@ export default function useDownLoadFile(){
 			}
 		}
 
-		permission ? RNFetchBlob.config(config).fetch("GET", item.url, {'Content-Type': 'application/json'})
+		requestPermission ? saveTrack(config, item.url!) : showAlert(item) 
+	}
+	const saveTrack = (config:any, trackUrl:string) =>{
+		RNFetchBlob.config(config).fetch("GET", trackUrl, {'Content-Type': 'application/json'})
 			.progress((received, total) => {
 			console.log("progress", received / total);
         })
@@ -43,20 +46,24 @@ export default function useDownLoadFile(){
             console.log("errorMessage", errorMessage)
             showToast("Error en la descarga")
 		})
-		: Alert.alert(
+	}
+
+	const showAlert = (item:TrackData) =>{
+		Alert.alert(
 			"FALTAN PERMISOS!!!",
 			"Negaste permisos que necesitas para descargar un video o canción",
 			[
 				{
-				text: "Cancel",
-				onPress: () => console.log("Cancel Pressed"),
-				style: "cancel"
+					text: "Cancel",
+					onPress: () => console.log("Cancel Pressed"),
+					style: "cancel"
 				},
-				{ text: "Dar permiso", onPress: () =>  downloadTrack(item)}
+				{ 
+					text: "Dar permiso", 
+					onPress: () =>  downloadTrack(item)}
 			]
 		)
 	}
-
 	return {
 		downloadTrack
 	}
