@@ -5,6 +5,7 @@ import ConverterContext from '../context/ConverterContext'
 
 import getVideosList from '../utils/getVideosList'
 import getUrlSong from '../utils/getUrlSong'
+import useHistoryStorage from './useHistoryStorage';
 
 
 export default function useYoutube(){
@@ -12,7 +13,11 @@ export default function useYoutube(){
 	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
 
 	const init = async ()=>{
-		await getByKey({key: "jt music"})
+		const {getLastSearch} = useHistoryStorage()
+		const lastSearch = await getLastSearch()
+		if(lastSearch){
+			await getByKey({key: lastSearch})
+		}else await getByKey({key: "Imagine Dragons"})
 		await SplashScreen.hideAsync();
 	}
 
