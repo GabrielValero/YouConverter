@@ -32,12 +32,12 @@ export default function useMusicPlayer(){
 		}
 	});
 
-	const addSong = async ({song}: {song: TrackData})=>{ // new song added to the trackList
+	const addTrack = async ({track}: {track: TrackData})=>{ // new track added to the trackList
 		const trackList = await TrackPlayer.getQueue()
-		if(isNotAdded(trackList as TrackData[], song)){
-			song.url = await getUrlSong(song.videoId!) // get youtube video url converted to mp3
+		if(isNotAdded(trackList as TrackData[], track)){
+			track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
 			
-			await TrackPlayer.add([song as Track]) // valid if song is added, if true then add song to queue.
+			await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
 		}
 		showToast("Se añadió")
 	}
@@ -45,7 +45,7 @@ export default function useMusicPlayer(){
 		await TrackPlayer.getQueue()
 	}
 	
-	const isPlaying = async ()=>{ // return true if is playing any song
+	const isPlaying = async ()=>{ // return true if is playing any track
 		const state = await TrackPlayer.getPlaybackState();
 		return state.state === State.Playing
 	}
@@ -79,7 +79,7 @@ export default function useMusicPlayer(){
 		showToast("Vaciaste la lista")
 	}
 	return{
-		addSong,
+		addTrack,
 		playAndPause,
 		playNextSong,
 		playPreviousSong,

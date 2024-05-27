@@ -12,17 +12,17 @@ import { TrackData } from '../../types';
 
 
 type Props = {
-	song: TrackData
+	track: TrackData
 	absolute?: any
 }
 
-export default function PlayButton({song, absolute}: Props){
+export default function PlayButton({track, absolute}: Props){
 
 
-	const {addSong} = useMusicPlayer()
+	const {addTrack} = useMusicPlayer()
 
 	const onPress = ()=>{
-		addSong({song})
+		addTrack({track})
 	}
 
 	return(

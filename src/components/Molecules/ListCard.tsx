@@ -31,7 +31,7 @@ export default function ListCard({item}: Prop){
             </View>
             <View style={[styles.container]}>
                 <DownloadButton item={item}/>
-                <PlayButton song={item}/>
+                <PlayButton track={item}/>
             </View>
         </View>
     )

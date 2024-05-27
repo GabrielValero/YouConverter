@@ -7,8 +7,8 @@ export default async function getUrlSong(id: string, count: number = 0): Promise
 
 	try{
 		const fetchResult = await fetch(searchVideoUrl)
-		const song: Response = await fetchResult.json() as Response
-		return song.url!
+		const track: Response = await fetchResult.json() as Response
+		return track.url!
 	}catch(err: any){
 		if(count < 3) return getUrlSong(id, count + 1)
 		return ""
