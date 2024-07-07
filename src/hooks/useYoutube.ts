@@ -11,11 +11,11 @@ import useHistoryStorage from './useHistoryStorage';
 export default function useYoutube(){
 	
 	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
-
+	const {storeNewSearch, getLastSearch} = useHistoryStorage()
+	
 	const init = async ()=>{
-		const {getLastSearch} = useHistoryStorage()
 		const lastSearch = await getLastSearch()
-		if(lastSearch){
+		if(lastSearch || lastSearch != ''){
 			await getByKey({key: lastSearch})
 		}else await getByKey({key: "Imagine Dragons"})
 		await SplashScreen.hideAsync();
@@ -36,10 +36,12 @@ export default function useYoutube(){
 
 		}else{
 			getByKey({key: search})
+			
 		}
 	}
 
 	const getByKey = async ({key}: {key: string})=>{
+		storeNewSearch(key)
 		try{
 			const result = await getVideosList(key)
 			console.log(result);
