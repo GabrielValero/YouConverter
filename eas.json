@@ -3,29 +3,40 @@
     "version": ">= 0.47.0"
   },
   "build": {
-    "dev": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "image": "ubuntu-18.04-jdk-11-ndk-r19c"
-      },
-      "env": {
-        "NODE_ENV": "development"
-      }
-    },
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "android": {
-        "gradleCommand": ":app:assembleDebug"
-      }
-    },
-    "preview": {
+    "production": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
+        "EXPO_PUBLIC_APP_VARIANT": "production"
+      }
+    }, 
+    
+    "preview":{
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleProdRelease"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
+        "EXPO_PUBLIC_APP_VARIANT": "production"
       }
     },
-    "production": {}
+
+    "development": {
+      "extends": "preview",
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleDevDebug"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development"
+      }
+    }
+
+    
   },
   "submit": {
     "production": {}
