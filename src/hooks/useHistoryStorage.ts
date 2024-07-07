@@ -39,9 +39,8 @@ export default function useHistoryStorage(){
         }
     }
     const getLastTrack = async()=>{
-        const lastTrack = AsyncStorage.getItem("lastTrackPlayed")
-        console.log(lastTrack);
-        return lastTrack
+        const lastTrack = await AsyncStorage.getItem("lastTrackPlayed")
+        return lastTrack ? JSON.parse(lastTrack) as TrackData : null
     }
     
     return{

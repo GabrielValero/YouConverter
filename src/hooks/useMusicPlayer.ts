@@ -14,8 +14,7 @@ import useHistoryStorage from './useHistoryStorage';
 export default function useMusicPlayer(){
 	const navigation = useNavigation()
 	const {setPlayState, setTrack } = useContext(ReproductorContext)
-	const {storeLastTrack} = useHistoryStorage()
-
+	const {storeLastTrack, getLastTrack} = useHistoryStorage()
 	const events = [
 		Event.PlaybackState,
 		Event.PlaybackError,
@@ -33,16 +32,31 @@ export default function useMusicPlayer(){
 		}
 	});
 
-	const addTrack = async ({track}: {track: TrackData})=>{ // new track added to the trackList
-		console.log(track);
-		
-		const trackList = await TrackPlayer.getQueue()
-		if(isNotAdded(trackList as TrackData[], track)){
-			track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
+	useEffect(()=>{
+		init();
+	},[])
+
+	const init = async ()=>{
+		const lastTrackPlayed = await getLastTrack()
+		if(lastTrackPlayed){
+			console.log("lastTrackPlayed",lastTrackPlayed);
 			
-			await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
+			addTrack({track: lastTrackPlayed})
 		}
-		showToast("Se añadió")
+	}
+
+	const addTrack = async ({track}: {track: TrackData})=>{ // new track added to the trackList
+		console.log("addTrack", track);
+		
+		if(track){
+			const trackList = await TrackPlayer.getQueue()
+			if(isNotAdded(trackList as TrackData[], track)){
+				track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
+				
+				await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
+			}
+			showToast("Se añadió")
+		}
 	}
 	const getQueue = async ()=>{
 		await TrackPlayer.getQueue()
