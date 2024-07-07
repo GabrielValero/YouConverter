@@ -87,7 +87,6 @@ export async function setupPlayer() { // inicializa el track player
 			Capability.Pause,
 			Capability.SkipToNext,
 			Capability.SkipToPrevious,
-			Capability.Stop,
 			Capability.SeekTo,
 		],
 		compactCapabilities: [
