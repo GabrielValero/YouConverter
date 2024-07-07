@@ -9,10 +9,12 @@ import isNotAdded from '../utils/isNotAdded'
 import getUrlSong from '../utils/getUrlSong'
 import showToast from '../utils/showToast';
 import { TrackData } from '../types';
+import useHistoryStorage from './useHistoryStorage';
 
 export default function useMusicPlayer(){
 	const navigation = useNavigation()
 	const {setPlayState, setTrack } = useContext(ReproductorContext)
+	const {storeLastTrack} = useHistoryStorage()
 
 	const events = [
 		Event.PlaybackState,
@@ -22,9 +24,8 @@ export default function useMusicPlayer(){
 
 	useTrackPlayerEvents(events, async (e)=>{
 		if(e.type == "playback-active-track-changed"){
-			
 			setTrack(e.track as TrackData);
-			console.info("track", e);
+			await storeLastTrack(e.track as TrackData)
 		}else if(e.type == "playback-state"){
 			setPlayState(e.state)
 			if(e.state == State.None) resetPlayList()
@@ -33,6 +34,8 @@ export default function useMusicPlayer(){
 	});
 
 	const addTrack = async ({track}: {track: TrackData})=>{ // new track added to the trackList
+		console.log(track);
+		
 		const trackList = await TrackPlayer.getQueue()
 		if(isNotAdded(trackList as TrackData[], track)){
 			track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
