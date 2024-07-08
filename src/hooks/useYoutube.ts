@@ -15,7 +15,7 @@ export default function useYoutube(){
 	
 	const init = async ()=>{
 		const lastSearch = await getLastSearch()
-		if(lastSearch || lastSearch != ''){
+		if(lastSearch && lastSearch != ''){
 			await getByKey({key: lastSearch})
 		}else await getByKey({key: "Imagine Dragons"})
 		await SplashScreen.hideAsync();
