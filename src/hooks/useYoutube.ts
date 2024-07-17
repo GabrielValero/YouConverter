@@ -7,17 +7,17 @@ import getVideosList from '../utils/getVideosList'
 import getUrlSong from '../utils/getUrlSong'
 import useHistoryStorage from './useHistoryStorage';
 
-
 export default function useYoutube(){
 	
-	const {setConverterMessages,  setYoutubeVideosList} = useContext(ConverterContext)
+	const {setYoutubeVideosList} = useContext(ConverterContext)
 	const {storeNewSearch, getLastSearch} = useHistoryStorage()
 	
 	const init = async ()=>{
 		const lastSearch = await getLastSearch()
+		
 		if(lastSearch && lastSearch != ''){
-			await getByKey({key: lastSearch})
-		}else await getByKey({key: "Imagine Dragons"})
+			await fetchVideosList({key: lastSearch})
+		}else await fetchVideosList({key: "Imagine Dragons"})
 		await SplashScreen.hideAsync();
 	}
 
@@ -35,12 +35,12 @@ export default function useYoutube(){
 			else temp = search.slice(search.indexOf('v=')+2); // if url is web version and don´t include &
 
 		}else{
-			getByKey({key: search})
+			fetchVideosList({key: search})
 			
 		}
 	}
 
-	const getByKey = async ({key}: {key: string})=>{
+	const fetchVideosList = async ({key}: {key: string})=>{
 		storeNewSearch(key)
 		try{
 			const result = await getVideosList(key)

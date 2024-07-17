@@ -5,16 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 
 import ReproductorContext from '../context/ReproductorContext'
 
-import isNotAdded from '../utils/isNotAdded'
+import checkIfTrackIsAdded  from '../utils/checkIfTrackIsAdded'
 import getUrlSong from '../utils/getUrlSong'
 import showToast from '../utils/showToast';
 import { TrackData } from '../types';
 import useHistoryStorage from './useHistoryStorage';
-
+var i=0
 export default function useMusicPlayer(){
 	const navigation = useNavigation()
 	const {setPlayState, setTrack } = useContext(ReproductorContext)
 	const {storeLastTrack, getLastTrack} = useHistoryStorage()
+	const [playerInitialized, setPlayerInitialized] = useState(false);
+
 	const events = [
 		Event.PlaybackState,
 		Event.PlaybackError,
@@ -22,8 +24,12 @@ export default function useMusicPlayer(){
 	];
 
 	useTrackPlayerEvents(events, async (e)=>{
+		
+		
 		if(e.type == "playback-active-track-changed"){
 			setTrack(e.track as TrackData);
+			console.log("Cambio la pista ya ");
+			
 			await storeLastTrack(e.track as TrackData)
 		}else if(e.type == "playback-state"){
 			setPlayState(e.state)
@@ -33,10 +39,15 @@ export default function useMusicPlayer(){
 	});
 
 	useEffect(()=>{
-		init();
-	},[])
-
+		if (!playerInitialized) {
+			initializePlayer().then(() => setPlayerInitialized(true));
+		}
+	}, [playerInitialized])
+	async function initializePlayer() {
+		init()
+	}
 	const init = async ()=>{
+		console.log("Se esta super ejecutando esta wea", i++);
 		const lastTrackPlayed = await getLastTrack()
 		if(lastTrackPlayed){
 			console.log("lastTrackPlayed",lastTrackPlayed);
@@ -50,7 +61,8 @@ export default function useMusicPlayer(){
 		
 		if(track){
 			const trackList = await TrackPlayer.getQueue()
-			if(isNotAdded(trackList as TrackData[], track)){
+			const trackIsNotAdded = checkIfTrackIsAdded(trackList as TrackData[], track)
+			if(trackIsNotAdded){
 				track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
 				
 				await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
