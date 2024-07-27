@@ -3,15 +3,13 @@ import {View, StyleSheet, useWindowDimensions} from 'react-native'
 
 import ImageTemplate from '../Templates/ImageTemplate'
 
-
+import { useTrackStore } from '../../store/useTrackStore';
 import colors from '../../config/colors';
-import useMusicPlayer from '../../hooks/useMusicPlayer';
-import ReproductorContext from '../../context/ReproductorContext';
 
 export default function TrackPlayerImg(){
 
 	const {width} = useWindowDimensions();
-	const {track} = useContext(ReproductorContext)
+	const track = useTrackStore(state=>state.track)
 
 	const styleComponent = [styles.imageContainer, {width: width*0.8, height: width*0.8 }]
 	return(

@@ -3,16 +3,15 @@ import {View, StyleSheet} from 'react-native'
 import {Slider} from '@miblanchard/react-native-slider';
 
 import {useProgress} from 'react-native-track-player';
-import ReproductorContext from '../../context/ReproductorContext'
-import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors';
 import formatTime from '../../utils/formatTime';
+import { useTrackStore } from '../../store/useTrackStore';
 
 export default function ProgressBar(){
 	const { position, buffered } = useProgress()
-	const {seekTo} = useMusicPlayer()
-	const {track} = useContext(ReproductorContext)
+	const track = useTrackStore(state=>state.track)
+	const seekTo = useTrackStore(state=>state.seekTo)
 
 	const trackPosition = formatTime(position);
 	const trackDuration = formatTime(track!.duration);
@@ -20,19 +19,21 @@ export default function ProgressBar(){
 	return(
 		<View style={styles.container}>
 			<View style={styles.progressBarContainer}>
-				<View style={[styles.bufferBar, styles.progressBar, {width: `${track?.duration ? buffered*100/track.duration : "0"}%`}]}/>
-				<Slider
-					value={position}
-					animateTransitions={true}
-					minimumValue={0}
-					maximumValue={track?.duration}
-					containerStyle={styles.progressBar}
-					maximumTrackTintColor={"transparent"}
-					minimumTrackTintColor={colors.mainColor}
-					minimumTrackStyle={styles.bar}
-					thumbTintColor={"#fff"}
-					onSlidingComplete={seekTo}
-				/>
+				{track?.duration && (<>
+					<View style={[styles.bufferBar, styles.progressBar, {width: `${track?.duration ? buffered*100/track.duration : "0"}%`}]}/>
+					<Slider
+						value={position}
+						animateTransitions={true}
+						minimumValue={0}
+						maximumValue={track?.duration}
+						containerStyle={styles.progressBar}
+						maximumTrackTintColor={"transparent"}
+						minimumTrackTintColor={colors.mainColor}
+						minimumTrackStyle={styles.bar}
+						thumbTintColor={"#fff"}
+						onSlidingComplete={seekTo}
+					/>
+				</>)}
 			</View>
 			<View style={styles.timeContainer}>
 				<TextTemplate small bold>

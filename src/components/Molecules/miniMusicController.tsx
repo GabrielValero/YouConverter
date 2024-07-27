@@ -1,8 +1,7 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import {View, StyleSheet, Image, Pressable} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import ReproductorContext from '../../context/ReproductorContext'
 import colors from '../../config/colors'
 
 import ImageTemplate from '../Templates/ImageTemplate'
@@ -10,15 +9,14 @@ import TextTemplate from '../Templates/TextTemplate'
 
 import ControlNextButton from '../Atoms/ControlNextButton'
 import ControlPlayButton from '../Atoms/ControlPlayButton'
+import { useTrackStore } from '../../store/useTrackStore'
 import { RootStackNavigationProp } from '../../types'
 
-
-export default function MiniMusicController(){
+export default React.memo(function MiniMusicController(){
 	const navigation = useNavigation<RootStackNavigationProp>()
-	const {track} = useContext(ReproductorContext)
+	const track = useTrackStore(state => state.track)
 
 	const moveTo = () => track && navigation.navigate('MusicPlayerStack')
-	
 	return track ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>
@@ -35,7 +33,7 @@ export default function MiniMusicController(){
 			</View>
 		</View>
 	) : null
-}
+})
 
 const styles = StyleSheet.create({
 	infoContainer:{

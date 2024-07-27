@@ -1,29 +1,15 @@
 import React, {useContext, useEffect} from 'react'
-import * as SplashScreen from 'expo-splash-screen';
 import ConverterContext from '../context/ConverterContext'
 
 
 import getVideosList from '../utils/getVideosList'
 import getUrlSong from '../utils/getUrlSong'
-import useHistoryStorage from './useHistoryStorage';
+import { useHistoryStore } from '../store/useHistoryStore';
 
 export default function useYoutube(){
 	
 	const {setYoutubeVideosList} = useContext(ConverterContext)
-	const {storeNewSearch, getLastSearch} = useHistoryStorage()
-	
-	const init = async ()=>{
-		const lastSearch = await getLastSearch()
-		
-		if(lastSearch && lastSearch != ''){
-			await fetchVideosList({key: lastSearch})
-		}else await fetchVideosList({key: "Imagine Dragons"})
-		await SplashScreen.hideAsync();
-	}
-
-	useEffect(()=>{
-		init()
-	}, [])
+	const storeNewSearch = useHistoryStore(state=> state.storeNewSearch) 
 
 	const getQueryResult = ({search}: {search: string}) => {
 		const isYoutubeLink = search.includes('youtube.com/watch?v=') || search.includes('youtu.be/')
@@ -35,21 +21,23 @@ export default function useYoutube(){
 			else temp = search.slice(search.indexOf('v=')+2); // if url is web version and don´t include &
 
 		}else{
+			storeNewSearch(search)
 			fetchVideosList({key: search})
 			
 		}
 	}
 
 	const fetchVideosList = async ({key}: {key: string})=>{
-		storeNewSearch(key)
 		try{
 			const result = await getVideosList(key)
-			console.log(result);
 			setYoutubeVideosList(result)
 		}catch(err: any){
 			throw new Error(`Fallo al obtener la lista de canciones. error: ${err.message}`)
 		}
 	} 
 
-	return{getQueryResult}
+	return{
+		getQueryResult, 
+		fetchVideosList
+	}
 }

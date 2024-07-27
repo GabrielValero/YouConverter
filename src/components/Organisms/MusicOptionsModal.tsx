@@ -7,12 +7,13 @@ import { MaterialCommunityIcons, MaterialIcons, Ionicons  } from '@expo/vector-i
 
 import TextTemplate from '../Templates/TextTemplate'
 import colors from '../../config/colors'
-import useMusicPlayer from '../../hooks/useMusicPlayer'
 import TrackPlayer from 'react-native-track-player';
-import ReproductorContext from '../../context/ReproductorContext';
 import { RootStackNavigationProp } from '../../types';
+import { useTrackStore } from '../../store/useTrackStore';
 export default function MusicOptionsModal(){
-	const {resetPlayList, removeSong} = useMusicPlayer()
+	const resetPlayList = useTrackStore(state=>state.resetPlayList)
+	
+	const removeSong = useTrackStore(state=>state.removeSong)
 	const navigation = useNavigation<RootStackNavigationProp>();
 
 	const onReset = ()=>{

@@ -4,10 +4,10 @@ import {View, StyleSheet} from 'react-native'
 import PlayerControllers from '../Molecules/PlayerControllers'
 import ProgressBar from '../Molecules/ProgressBar'
 import TextTemplate from '../Templates/TextTemplate'
-import ReproductorContext from '../../context/ReproductorContext'
+import { useTrackStore } from '../../store/useTrackStore'
 
 export default function MusicController(){
-	const {track} = useContext(ReproductorContext)
+	const track = useTrackStore(state=>state.track)
 	
 	return(
 		<View style={styles.container}>

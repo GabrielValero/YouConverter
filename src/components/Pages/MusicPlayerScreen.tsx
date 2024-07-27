@@ -11,15 +11,14 @@ import { Entypo } from '@expo/vector-icons';
 
 import dimens from '../../config/dimens'
 import colors from '../../config/colors'
-import ReproductorContext from '../../context/ReproductorContext';
 import { MusicPlayerScreenProps } from '../../types';
+import { useTrackStore } from '../../store/useTrackStore';
 
 
 export default function MusicPlayerScreen({navigation}: MusicPlayerScreenProps){
 	const {height} = useWindowDimensions();
 	const stylesComponents = [styles.container, {height: height}]
-	const {track} = useContext(ReproductorContext)
-
+	const track = useTrackStore(state=>state.track)
 	const goBack= ()=> navigation.goBack()
 	const goModal= ()=> navigation.navigate("MusicOptionsModal")
 	if(!track){

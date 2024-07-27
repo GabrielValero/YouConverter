@@ -3,14 +3,12 @@ import {Pressable, Image, StyleSheet} from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons';
 
-import useMusicPlayer from '../../hooks/useMusicPlayer'
-
 import colors from '../../config/colors'
 import dimens from '../../config/dimens'
+import { useTrackStore } from '../../store/useTrackStore';
 
 export default function ControlPreviousButton({big}: {big:any}){
-	const {playPreviousSong} = useMusicPlayer()
-
+	const playPreviousSong = useTrackStore(state=>state.playPreviousSong)
 
 	return(
 		<Pressable onPress={playPreviousSong}>

@@ -6,9 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import color from '../../config/colors'
 import dimen from '../../config/dimens'
 
-import useMusicPlayer from '../../hooks/useMusicPlayer'
 import ButtonAnimated from "./ButtonAnimated"
 import { TrackData } from '../../types';
+import { useTrackStore } from '../../store/useTrackStore';
 
 
 type Props = {
@@ -18,11 +18,10 @@ type Props = {
 
 export default function PlayButton({track, absolute}: Props){
 
-
-	const {addTrack} = useMusicPlayer()
+	const addTrack = useTrackStore(state=>state.addTrack)
 
 	const onPress = ()=>{
-		addTrack({track})
+		addTrack(track)
 	}
 
 	return(

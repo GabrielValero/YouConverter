@@ -4,19 +4,18 @@ import {Pressable, Image, StyleSheet} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 
 import ReproductorContext from '../../context/ReproductorContext'
-import useMusicPlayer from '../../hooks/useMusicPlayer'
 
 import colors from '../../config/colors'
 import dimens from '../../config/dimens'
+import { useTrackStore } from '../../store/useTrackStore';
 
 type Prop = {
 	big?: any
 }
 
 export default function ControlPlayButton({big}: Prop){
-	const {playAndPause} = useMusicPlayer()
 	const {playState} = useContext(ReproductorContext)
-
+	const playAndPause = useTrackStore(state=>state.playAndPause)
 	
 	return big ? (
 		<Pressable onPress={playAndPause} style={styles.button}>

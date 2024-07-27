@@ -1,15 +1,13 @@
 import React, {useState} from 'react'
-import {View, Image, Pressable, StyleSheet} from 'react-native'
-import {RepeatMode} from 'react-native-track-player'
-import useMusicPlayer from '../../hooks/useMusicPlayer'
+import {Pressable, StyleSheet} from 'react-native'
 import Svg, { Path } from "react-native-svg"
 
-import dimens from '../../config/dimens';
 import colors from '../../config/colors';
+import { useTrackStore } from '../../store/useTrackStore'
 
 export default function ControlRepeatButton({size = 40}){
-	const {setRepeatMode} = useMusicPlayer()
-
+	const setRepeatMode = useTrackStore(state=>state.setRepeatMode)
+	
 	const [isRepeat, setRepeat] = useState(true)
 	const repeatAllIcon = ()=> <Svg
 			style={styles.center}
