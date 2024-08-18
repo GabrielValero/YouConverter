@@ -27,9 +27,7 @@ export function ReproductorProvider({children}: Props){
 	const {fetchVideosList} = useYoutube()
 
 	const storeLastTrack = useHistoryStore((state)=>state.storeLastTrack)
-	const getLastTrack = useHistoryStore((state)=>state.getLastTrack)
 	const setTrack = useTrackStore(state=>state.setTrack)
-	const addTrack = useTrackStore(state=>state.addTrack)
 	const getLastSearch = useHistoryStore(state=> state.getLastSearch)
 	const events = [
 		Event.PlaybackState,
@@ -52,12 +50,7 @@ export function ReproductorProvider({children}: Props){
 	});
 
 	const init = async ()=>{
-		const lastTrack = await getLastTrack()
-		if(lastTrack) await addTrack(lastTrack)
-
 		const lastSearch = await getLastSearch()
-		
-		
 		if(lastSearch && lastSearch != ''){
 			await fetchVideosList({key: lastSearch})
 		}else await fetchVideosList({key: "Imagine Dragons"})

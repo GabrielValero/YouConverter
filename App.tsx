@@ -9,14 +9,32 @@ import {setupPlayer} from './src/services'
 import {ConverterProvider} from './src/context/ConverterContext'
 import {ReproductorProvider} from './src/context/ReproductorContext'
 import { SearchStack } from './src/Navigation/Stack/ConverterStack'
+import { useHistoryStore } from './src/store/useHistoryStore';
+import { useTrackStore } from './src/store/useTrackStore';
+import useYoutube from './src/hooks/useYoutube';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const {fetchVideosList} = useYoutube()
+  const storeLastTrack = useHistoryStore((state)=>state.storeLastTrack)
+	const getLastTrack = useHistoryStore((state)=>state.getLastTrack)
+	const setTrack = useTrackStore(state=>state.setTrack)
+	const addTrack = useTrackStore(state=>state.addTrack)
+	const getLastSearch = useHistoryStore(state=> state.getLastSearch)
 
+  const init = async ()=>{
+		const lastTrack = await getLastTrack()
+		if(lastTrack) await addTrack(lastTrack)
+	}
 
   useEffect(() => {
-    setupPlayer();
+    (
+      async ()=>{
+        await setupPlayer();
+        await init()
+      }
+    )()
   }, []);
 
 
