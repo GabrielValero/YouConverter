@@ -23,6 +23,7 @@ export const useHistoryStore = create<HistoryState>()(set=>({
             const isSearchAdded = (newList.filter( i=> i == keySearch)).length > 0
             if(!isSearchAdded){
                 newList?.unshift(keySearch)
+                newList = newList.splice(0, 5)
                 AsyncStorage.setItem("history",JSON.stringify(newList))
             }
         } catch (error) {
