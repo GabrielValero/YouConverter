@@ -1,4 +1,5 @@
 
+
 # YouConverter
 
 You Converter es una aplicacion para teléfono integrada con la API de YOUTUBE para buscar canciones, reproducirlos y descargar las canciones.
@@ -8,8 +9,10 @@ La aplicación realiza las peticiones para la busqueda de canciones, reproduccio
 
 Insert gif or link to demo
 
-![Imagen 1 de la demo](/assets/ShowMain.png)
-![Imagen 2 de la demo](/assets/ShowPlayer.png)
+<div style="display: flex; justify-content: center; align-items: center; flex-direction:row">
+    <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/master/assets/ShowMain.png?raw=true" width="200">
+    <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/master/assets/ShowPlayer.png?raw=true" width="200">
+</div>
 
 ## Instalación
 
@@ -19,8 +22,7 @@ Por lo tanto es necesario que tenga JAVA 17
 
 Una vez copiado el repositorio ejecute
 ```bash
-  npm install 
-  npm prebuild
+  npm install
 ```
 Si no quiere estar haciendo apk's cada vez que agregue una librería nativa tambien puede ejecutar
 
