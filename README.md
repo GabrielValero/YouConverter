@@ -10,8 +10,8 @@ La aplicación realiza las peticiones para la busqueda de canciones, reproduccio
 Insert gif or link to demo
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction:row">
-    <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/readme/assets/ShowMain.png?raw=true" width="200">
-    <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/readme/assets/ShowPlayer.png?raw=true" width="200">
+  <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/master/assets/ShowMain.png?raw=true" width="200">
+  <img src="https://raw.githubusercontent.com/GabrielValero/YouConverter/master/assets/ShowPlayer.png?raw=true" width="200">
 </div>
 
 ## Instalación
