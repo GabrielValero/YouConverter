@@ -1,9 +1,7 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import ConverterContext from '../context/ConverterContext'
 
-
 import getVideosList from '../utils/getVideosList'
-import getUrlSong from '../utils/getUrlSong'
 import { useHistoryStore } from '../store/useHistoryStore';
 
 export default function useYoutube(){
