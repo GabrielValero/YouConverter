@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
 import { TrackData } from '../types';
-import checkIfItemIsAdded from '../utils/checkIfItemIsAdded';
 
 type HistoryType = string[]
 

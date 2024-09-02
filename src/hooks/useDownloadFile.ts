@@ -1,12 +1,10 @@
-import React, {useContext, useState} from 'react'
-import {Platform, Alert} from 'react-native'
+import React from 'react'
+import {Alert} from 'react-native'
 import RNFetchBlob from "rn-fetch-blob";
 import usePermissions from './usePermissions';
 import getUrlSong from '../utils/getUrlSong';
 import { TrackData } from '../types';
 import showToast from '../utils/showToast';
-
-
 
 export default function useDownLoadFile(){
   

@@ -26,7 +26,7 @@ export default function PlayButton({track, absolute}: Props){
 
 	return(
 		<ButtonAnimated styles={styles} onClick={onPress} absolute={absolute}>
-			<Ionicons name="ios-play-circle" size={dimen.iconsMedium} color={color.mainColor} />
+			<Ionicons name="play-circle" size={dimen.iconsMedium} color={color.mainColor} />
 		</ButtonAnimated>
 	)
 }
