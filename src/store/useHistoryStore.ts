@@ -19,7 +19,7 @@ export const useHistoryStore = create<HistoryState>()(set=>({
             newList = JSON.parse(elementList)
         }
         try {
-            const isSearchAdded = (newList.filter( i=> i == keySearch)).length > 0
+            const isSearchAdded = newList.includes(keySearch)
             if(!isSearchAdded){
                 newList?.unshift(keySearch)
                 newList = newList.splice(0, 5)
