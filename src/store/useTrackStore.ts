@@ -12,12 +12,10 @@ import checkIfTrackIsAdded from '../utils/checkIfItemIsAdded'
 
 interface TrackState {
     track: TrackData | undefined
-    setTrack: (track: TrackData | undefined) => void
-    trackList: TrackData[]
-    setTrackList: (valueList: TrackData[]) => void
-    addTrack: (track: TrackData) => void
-    getQueue: () => void
-    isPlaying: () => Promise<boolean>
+    setTrack: (track: TrackData | undefined)=> void
+    addTrack: (track: TrackData)=> void
+    getQueue: ()=> void
+    isPlaying: ()=> Promise<boolean>
 
     playAndPause: () => void
     playNextSong: () => void
@@ -28,55 +26,48 @@ interface TrackState {
     resetPlayList: () => void
 }
 
-export const useTrackStore = create<TrackState>()((set, get) => ({
-    track: undefined,
-    setTrack: async (track: TrackData | undefined) =>
-        set((state) => ({ track })),
-    trackList: [],
-    setTrackList: async (valueList: TrackData[]) =>
-        set((state) => ({ trackList: valueList })),
-    addTrack: async (track: TrackData) => {
-        // new track added to the trackList
-        console.log('addTrack', track)
+export const useTrackStore = create<TrackState>()((set, get)=>({
 
-        if (track) {
-            const trackList = await TrackPlayer.getQueue()
-            const trackIsAdded = checkIfTrackIsAdded(
-                trackList as TrackData[],
-                track,
-            )
-            if (!trackIsAdded) {
-                track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
-
-                await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
-                showToast('Se añadió')
-            }
-        }
-    },
-    getQueue: async () => {
-        await TrackPlayer.getQueue()
-    },
-    isPlaying: async () => {
-        // return true if is playing any track
-        const state = await TrackPlayer.getPlaybackState()
-        return state.state === State.Playing
-    },
-    playAndPause: async () => {
-        const { isPlaying } = get()
-        ;(await isPlaying()) ? TrackPlayer.pause() : TrackPlayer.play()
-    },
-    playNextSong: async () => {
-        await TrackPlayer.skipToNext()
-    },
-    playPreviousSong: async () => {
-        await TrackPlayer.skipToPrevious()
-    },
-    seekTo: async (value: Array<number>) => {
-        await TrackPlayer.seekTo(value[0])
-    },
-    setRepeatMode: async (RepeatMode: RepeatMode) => {
-        await TrackPlayer.setRepeatMode(RepeatMode)
-    },
+    track: undefined, 
+    setTrack: async (track: TrackData | undefined)=> set((state) => ({track})),
+	addTrack: async (track: TrackData)=>{ // new track added to the trackList
+		
+		if(track){
+			const trackList = await TrackPlayer.getQueue()
+			const trackIsAdded = checkIfTrackIsAdded(trackList as TrackData[], track)
+			
+			
+			if(!trackIsAdded){
+				track.url = await getUrlSong(track.videoId!) // get youtube video url converted to mp3
+				
+				await TrackPlayer.add([track as Track]) // valid if track is added, if true then add track to queue.
+				showToast("Se añadió")
+			}
+		}
+	},
+	getQueue: async ()=>{
+		return await TrackPlayer.getQueue()
+	},
+	isPlaying: async ()=>{ // return true if is playing any track
+		const state = await TrackPlayer.getPlaybackState();
+		return state.state === State.Playing
+	},
+	playAndPause: async ()=>{
+        const {isPlaying} = get()
+		await isPlaying() ? TrackPlayer.pause() : TrackPlayer.play()
+	},
+	playNextSong: async ()=>{
+		await TrackPlayer.skipToNext()
+	},
+	playPreviousSong: async ()=>{
+		await TrackPlayer.skipToPrevious()
+	},
+	seekTo: async (value: Array<number>)=>{
+		await TrackPlayer.seekTo(value[0])
+	},
+	setRepeatMode: async (RepeatMode: RepeatMode)=>{
+		await TrackPlayer.setRepeatMode(RepeatMode)
+	},
     removeSong: async (trackIndex: number) => {
         const { resetPlayList } = get()
         const trackElements = (await TrackPlayer.getQueue()).length
