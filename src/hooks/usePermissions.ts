@@ -1,30 +1,35 @@
-import React, {useEffect, useState} from 'react'
-import {Platform, PermissionsAndroid, Alert, LogBox} from 'react-native'
+import React, { useEffect, useState } from "react";
+import { Platform, PermissionsAndroid, Alert, LogBox } from "react-native";
 
-export default function usePermissions(){
-
-    const WriteStoragePermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)
-                ? PermissionsAndroid.RESULTS.GRANTED
-                : await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, {
-                        title: 'Music',
-                        message: 'Es necesario para descargar música',
-                        buttonNegative: 'Cancel',
-                        buttonPositive: 'OK',
-                    }
-                );
-            console.log("permisions ",granted)
-            return granted === PermissionsAndroid.RESULTS.GRANTED || granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ? true : false
+export default function usePermissions() {
+  const WriteStoragePermission = async () => {
+    try {
+      const isWritePermissionGranted = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      );
+      const isGranted = PermissionsAndroid.RESULTS.GRANTED;
+      const requestPermission = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: "Music",
+          message: "Es necesario para descargar música",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK",
         }
-        catch (err){
-            console.log(err)
-            return false
-        }
+      );
+      const granted = isWritePermissionGranted ? isGranted : requestPermission;
+      console.log("permisions ", granted);
+      const verifyIfGranted =
+        granted === PermissionsAndroid.RESULTS.GRANTED ||
+        granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN;
+      return verifyIfGranted ? true : false;
+    } catch (err) {
+      console.log(err);
+      return false;
     }
+  };
 
-    return{
-        WriteStoragePermission,
-    }
+  return {
+    WriteStoragePermission,
+  };
 }
