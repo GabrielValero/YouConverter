@@ -1,4 +1,2 @@
-const string = {
-
-}
+const string = {}
 export default string
