@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
 	background:{
 		width: 1000,
 		height: 1000,
-		blurRadius: 1.3,
 		position: 'absolute',
 		top: 0,
 		opacity: 0.5,

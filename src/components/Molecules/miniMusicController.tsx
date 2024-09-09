@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		width: 200,
-		overflowX: 'hidden',
 		justifyContent: 'center'
 	},
 	row:{

@@ -1,7 +1,7 @@
 import React,{useContext} from 'react'
 import {Pressable, Image, StyleSheet} from 'react-native'
 
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 
 import ReproductorContext from '../../context/ReproductorContext'
 
@@ -29,8 +29,9 @@ export default function ControlPlayButton({big}: Prop){
 	(
 		<Pressable onPress={playAndPause} style={{margin: 15}}>
 			{playState === "playing" ?
-			<Ionicons name="ios-pause" size={dimens.iconsSmall} color={colors.textColor} />:
-			<Ionicons name="ios-play" size={dimens.iconsSmall} color={colors.textColor} />}
+			<AntDesign name="pause" size={24} color="black" />:
+			<FontAwesome name="play" size={dimens.iconsSmall} color={colors.textColor} />}
+			
 		</Pressable>
 		)
 }
