@@ -5,11 +5,11 @@ import PlayButton from '../Atoms/PlayButton'
 import ImageTemplate from '../Templates/ImageTemplate'
 import { TrackData } from '../../types'
 
-export default function CardVideo({item}: {item: TrackData}){
+export default function CardVideo({track}: {track: TrackData}){
 	return(
 			<View style={styles.card}>
-				<ImageTemplate url={item.artwork} style={{borderRadius: 28}} coverWidth coverHeight cover />
-				<PlayButton track={item} absolute/>
+				<ImageTemplate url={track.artwork} style={{borderRadius: 28}} coverWidth coverHeight cover />
+				<PlayButton track={track} absolute/>
 			</View>
 		)
 }
