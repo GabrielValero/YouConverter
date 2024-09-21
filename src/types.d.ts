@@ -3,12 +3,23 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 
 export interface TrackData {
     title: string
-    artwork: string
+    artwork?: string | null
+    artworkList?: thumbnailType
     videoId?: string
     artist: string
     duration: number
+    description?: string
+    publishedAt?: Date
+    channelId?: string
     url?: string
 }
+type thumbnailType = {
+    [key: string]: {
+      url: string;
+      width: number;
+      height: number;
+    };
+  }
 //Type to Stack
 export type RootStackParamList = {
     MusicPlayerStack: undefined

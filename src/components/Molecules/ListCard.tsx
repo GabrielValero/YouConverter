@@ -12,14 +12,15 @@ import { TrackData } from '../../types'
 import formatTime from '../../utils/formatTime'
 
 type Prop = {
-    track: TrackData
+    item: TrackData
 }
-export default function ListCard({ track }: Prop) {
-    const title = track.title
-    const artist = track.artist
-    const duration = track.duration
+export default function ListCard({ item }: Prop) {
+    
+    const title = item.title
+    const artist = item.artist
+    const duration = item.duration
     return (
-        track && (
+        item && (
             <View
                 style={[
                     styles.container,
@@ -28,7 +29,7 @@ export default function ListCard({ track }: Prop) {
             >
                 <View style={styles.containerImage}>
                     <ImageTemplate
-                        url={track.artwork}
+                        url={item.artworkList!['default'].url}
                         style={styles.image}
                         cover
                         coverWidth
@@ -48,8 +49,8 @@ export default function ListCard({ track }: Prop) {
                     </TextTemplate>
                 </View>
                 <View style={[styles.container]}>
-                    <DownloadButton track={track} />
-                    <PlayButton track={track} />
+                    <DownloadButton track={item} />
+                    <PlayButton track={item} />
                 </View>
             </View>
         )

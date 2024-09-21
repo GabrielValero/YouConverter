@@ -15,12 +15,13 @@ import { RootStackNavigationProp } from '../../types'
 export default React.memo(function MiniMusicController(){
 	const navigation = useNavigation<RootStackNavigationProp>()
 	const track = useTrackStore(state => state.track)
-
+	console.log('track', track);
+	
 	const moveTo = () => track && navigation.navigate('MusicPlayerStack')
 	return track ? (
 		<View style={[styles.row, styles.container]}>
 			<Pressable onPress={moveTo} style={[styles.row, styles.infoContainer]}>
-				<ImageTemplate url={track.artwork} style={{borderRadius: 42, width: 42, height: 42, backgroundColor: colors.backgroundApp}} cover />
+				<ImageTemplate url={track.artwork!} style={{borderRadius: 42, width: 42, height: 42, backgroundColor: colors.backgroundApp}} cover />
 				<View style={styles.text}>
 					<TextTemplate noWrap title>
 						{track?.title}

@@ -44,10 +44,11 @@ export const useHistoryStore = create<HistoryState>()((set) => ({
     },
     storeLastTrack: async (track: TrackData) => {
         try {
-            await AsyncStorage.setItem('lastTrackPlayed', JSON.stringify(track))
+            if(track) await AsyncStorage.setItem('lastTrackPlayed', JSON.stringify(track))
+            else await AsyncStorage.removeItem('lastTrackPlayed')
         } catch (error) {
             console.log(error)
-            await AsyncStorage.setItem('lastTrackPlayed', JSON.stringify(track))
+            await AsyncStorage.removeItem('lastTrackPlayed')
         }
     },
     getLastTrack: async () => {

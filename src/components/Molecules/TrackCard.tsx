@@ -8,7 +8,7 @@ import { TrackData } from '../../types'
 export default function CardVideo({track}: {track: TrackData}){
 	return(
 			<View style={styles.card}>
-				<ImageTemplate url={track.artwork} style={{borderRadius: 28}} coverWidth coverHeight cover />
+				<ImageTemplate url={track.artworkList!['default'].url} style={{borderRadius: 28}} coverWidth coverHeight cover />
 				<PlayButton track={track} absolute/>
 			</View>
 		)

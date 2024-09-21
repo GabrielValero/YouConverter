@@ -16,7 +16,7 @@ export default function TrackPlayerImg(){
 		<View style={styleComponent}>
 			<View style={styles.outStrock}>
 				<View style={styles.circle}>
-				<ImageTemplate url={track!.artwork } style={styles.image} coverWidth coverHeight cover/>
+				<ImageTemplate url={track!.artwork!} style={styles.image} coverWidth coverHeight cover/>
 				</View>
 			</View>
 			

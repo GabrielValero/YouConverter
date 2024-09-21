@@ -16,12 +16,8 @@ import useYoutube from './src/hooks/useYoutube';
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const {fetchVideosList} = useYoutube()
-  const storeLastTrack = useHistoryStore((state)=>state.storeLastTrack)
 	const getLastTrack = useHistoryStore((state)=>state.getLastTrack)
-	const setTrack = useTrackStore(state=>state.setTrack)
 	const addTrack = useTrackStore(state=>state.addTrack)
-	const getLastSearch = useHistoryStore(state=> state.getLastSearch)
 
   const init = async ()=>{
 		const lastTrack = await getLastTrack()

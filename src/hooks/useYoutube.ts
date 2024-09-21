@@ -35,6 +35,7 @@ export default function useYoutube() {
     const fetchVideosList = async ({ key }: { key: string }) => {
         try {
             const result = await getVideosList(key)
+            
             setYoutubeVideosList(result)
         } catch (err: any) {
             throw new Error(
