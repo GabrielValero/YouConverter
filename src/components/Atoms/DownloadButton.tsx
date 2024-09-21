@@ -9,13 +9,13 @@ import colors from '../../config/colors'
 import dimens from '../../config/dimens';
 import { TrackData } from '../../types';
 
-export default function DownloadButton({item} :{item: TrackData}){
+export default function DownloadButton({track} :{track: TrackData}){
 	
 	const {downloadTrack} = useDownloadFile()
 
 	const onPress = ()=>{
-		console.log("DB ",item);
-		downloadTrack(item)
+		console.log("DB ",track);
+		downloadTrack(track)
 	}
 
 	const source = require('../../../assets/downloadIcon.png')
