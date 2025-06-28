@@ -1,9 +1,10 @@
-const IS_PROD = process.env.EXPO_PUBLIC_APP_VARIANT === 'production'
+const IS_PROD = process.env.EXPO_PUBLIC_APP_VARIANT != 'production'
 
 const expo = () => ({
     name: IS_PROD ? 'You Converter' : 'You Converter (Dev)',
     slug: 'YouConverter',
     version: '1.0.0',
+    runtimeVersion: "1.0.0",
     orientation: 'portrait',
     entryPoint: './index.js',
     icon: IS_PROD ? './assets/icon.png' : './assets/iconDev.png',
@@ -14,6 +15,7 @@ const expo = () => ({
         backgroundColor: '#ffffff',
     },
     updates: {
+        url: "https://u.expo.dev/7ea12872-8ee9-4f52-8dbc-eeb8bc8d9b1b",
         fallbackToCacheTimeout: 0,
     },
     assetBundlePatterns: ['**/*'],
@@ -21,6 +23,7 @@ const expo = () => ({
         supportsTablet: true,
     },
     android: {
+        versionCode: 1,
         adaptiveIcon: {
             foregroundImage: IS_PROD
                 ? './assets/icon.png'

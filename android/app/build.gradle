@@ -109,9 +109,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.gabrielvalero.YouConverter.dev'
+    namespace 'com.gabrielvalero.YouConverter'
     defaultConfig {
-        applicationId 'com.gabrielvalero.YouConverter.dev'
+        applicationId 'com.gabrielvalero.YouConverter'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -137,18 +137,6 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
-        }
-    }
-    flavorDimensions "version"
-    productFlavors {
-        dev {
-            dimension "version"
-            applicationId 'com.gabrielvalero.YouConverter.dev'
-
-        }
-        prod {
-            dimension "version"
-            applicationId 'com.gabrielvalero.YouConverter.dev'
         }
     }
     packagingOptions {

@@ -5,18 +5,20 @@
   "build": {
     "production": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:bundleRelease"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
         "EXPO_PUBLIC_APP_VARIANT": "production"
       }
-    }, 
+    },
     
     "preview":{
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":app:assembleProdRelease"
+        "developmentClient": false,
+        "gradleCommand": ":app:assembleRelease"
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://you-converter-backend.vercel.app",
@@ -29,7 +31,7 @@
       "developmentClient": true,
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":app:assembleDevDebug"
+        "gradleCommand": ":app:assembleDebug"
       },
       "env": {
         "EXPO_PUBLIC_APP_VARIANT": "development"
