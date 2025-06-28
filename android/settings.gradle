@@ -44,7 +44,7 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = 'You Converter'
+rootProject.name = 'You Converter (Dev)'
 
 dependencyResolutionManagement {
   versionCatalogs {

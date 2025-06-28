@@ -1,4 +1,4 @@
-const IS_PROD = process.env.EXPO_PUBLIC_APP_VARIANT != 'production'
+const IS_PROD = process.env.EXPO_PUBLIC_APP_VARIANT === 'production'
 
 const expo = () => ({
     name: IS_PROD ? 'You Converter' : 'You Converter (Dev)',
