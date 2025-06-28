@@ -16,6 +16,7 @@ const expo = () => ({
     },
     updates: {
         url: "https://u.expo.dev/7ea12872-8ee9-4f52-8dbc-eeb8bc8d9b1b",
+        channel: "preview",
         fallbackToCacheTimeout: 0,
     },
     assetBundlePatterns: ['**/*'],
