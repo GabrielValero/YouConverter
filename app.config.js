@@ -5,35 +5,24 @@ const expo = () => ({
     slug: 'YouConverter',
     version: '1.0.0',
     runtimeVersion: "1.0.0",
-    orientation: 'portrait',
     entryPoint: './index.js',
-    icon: IS_PROD ? './assets/icon.png' : './assets/iconDev.png',
-    userInterfaceStyle: 'dark',
-    splash: {
-        image: IS_PROD ? './assets/splash.png' : './assets/splashDev.png',
-        resizeMode: 'cover',
-        backgroundColor: '#ffffff',
-    },
+    
     updates: {
         url: "https://u.expo.dev/7ea12872-8ee9-4f52-8dbc-eeb8bc8d9b1b",
         fallbackToCacheTimeout: 0,
     },
     assetBundlePatterns: ['**/*'],
-    ios: {
-        supportsTablet: true,
-    },
-    android: {
-        versionCode: 1,
-        adaptiveIcon: {
-            foregroundImage: IS_PROD
-                ? './assets/icon.png'
-                : './assets/iconDev.png',
-            backgroundColor: '#FFFFFF',
-        },
-        package: IS_PROD
-            ? 'com.gabrielvalero.YouConverter'
-            : 'com.gabrielvalero.YouConverter.dev',
-    },
+    plugins: [
+        [
+            "expo-splash-screen",
+            {
+                image: IS_PROD ? "./assets/icon.png" : "./assets/iconDev.png",
+                resizeMode: "cover",
+                backgroundColor: "#ffffff",
+                imageWidth: 200
+            }
+        ]
+    ],
     web: {
         favicon: './assets/favicon.png',
     },
