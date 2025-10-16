@@ -6,6 +6,7 @@ import ListCard from '../Molecules/ListCard'
 
 import ConverterContext from '../../context/ConverterContext' 
 import Separator from '../Atoms/Separator'
+import EmptyItem from '../Atoms/EmptyResults'
 
 export default function VideosList(){
 	const {youtubeVideosList} = useContext(ConverterContext)
@@ -20,6 +21,7 @@ export default function VideosList(){
 			contentContainerStyle={{paddingBottom: 70}}
 			ItemSeparatorComponent={Separator}
 			showsVerticalScrollIndicator={false}
+			ListEmptyComponent={EmptyItem}
 			showsHorizontalScrollIndicator={false}
 		/>
 	)

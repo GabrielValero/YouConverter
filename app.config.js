@@ -19,22 +19,28 @@ const expo = () => ({
         channel: "preview",
         fallbackToCacheTimeout: 0,
     },
-    assetBundlePatterns: ['**/*'],
-    ios: {
-        supportsTablet: true,
-    },
     android: {
+        package: 'com.gabrielvalero.YouConverter',
         versionCode: 1,
         adaptiveIcon: {
             foregroundImage: IS_PROD
                 ? './assets/icon.png'
                 : './assets/iconDev.png',
             backgroundColor: '#FFFFFF',
-        },
-        package: IS_PROD
-            ? 'com.gabrielvalero.YouConverter'
-            : 'com.gabrielvalero.YouConverter.dev',
+        }
     },
+    assetBundlePatterns: ['**/*'],
+    plugins: [
+        [
+            'expo-splash-screen',
+            {
+                image: IS_PROD ? './assets/icon.png' : './assets/iconDev.png',
+                resizeMode: 'cover',
+                backgroundColor: '#ffffff',
+                imageWidth: 200,
+            },
+        ],
+    ],
     web: {
         favicon: './assets/favicon.png',
     },
